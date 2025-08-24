@@ -14,13 +14,19 @@ public class NovaGPT {
         printer(welcomeMessage);
         String input = "";
         Scanner sc = new Scanner(System.in);
+        List ls = new List(100);
 
         while(!input.toLowerCase().equals(killswitch)) {
             input = sc.nextLine();
             if (input.toLowerCase().equals(killswitch)) {
                 break;
+            } else if(input.toLowerCase().equals("list")) {
+                //
+                printer(ls.toString());
+                continue;
             }
-            printer(input);
+            printer("added: " + input);
+            ls.add(input);
         }
         printer(goodbyeMessage);
     }
