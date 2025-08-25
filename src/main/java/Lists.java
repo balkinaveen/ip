@@ -5,10 +5,17 @@ public class Lists {
         list = new Task[size];
     }
 
+    public int getCounter() {
+        return this.counter;
+    }
+
     public void add(Task t) {
-        NovaGPT.printer("added: " + t.description());
+        NovaGPT.printer("Got it. I've added this task:\n"
+                + t.toString() + "\nNow you have "
+                + (this.getCounter() + 1)
+                + " tasks in the list.");
         list[counter] = t;
-        counter++;
+        this.counter++;
     }
 
     public void mark(int num) {
