@@ -1,5 +1,5 @@
-import java.util.List;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class NovaGPT {
     private static final String welcomeMessage = "Hello, I'm NovaGPT!\nWhat can I do for you today?";
@@ -13,17 +13,22 @@ public class NovaGPT {
         System.out.print(horizontalLine + "\n" + message + "\n" + horizontalLine + "\n");
     }
 
-    public static void handlerTodoTask(String input, Lists ls) {
+    public static void handlerTodoTask(String input, ArrayList<Task> ls) {
         String text = input.substring(4).trim();
         if (text.isEmpty()) {
             printer("OOPS! The description of a todo cannot be empty. " +
                     "\nDo format your input: todo <task>");
             return;
         }
-        ls.add(new Todo(text));
+        Task t = new Todo(text);
+        ls.add(t);
+        printer("Got it. I've added this task:\n"
+                + t.toString() + "\nNow you have "
+                + ls.size()
+                + " tasks in the list.");
     }
 
-    public static void handlerDeadlineTask(String input, Lists ls) {
+    public static void handlerDeadlineTask(String input, ArrayList<Task> ls) {
         String text = input.substring(8).trim();
         if (text.isEmpty()) {
             printer("OOPS! The description of a deadline cannot be empty. " +
@@ -35,10 +40,15 @@ public class NovaGPT {
             return;
         }
         String[] split = text.split("/by", 2);
-        ls.add(new Deadline(split[0].trim(),split[1].trim()));
+        Task t = new Deadline(split[0].trim(),split[1].trim());
+        ls.add(t);
+        printer("Got it. I've added this task:\n"
+                + t.toString() + "\nNow you have "
+                + ls.size()
+                + " tasks in the list.");
     }
 
-    public static void handlerEventTask(String input, Lists ls) {
+    public static void handlerEventTask(String input, ArrayList<Task> ls) {
         String text = input.substring(5).trim();
         if (text.isEmpty()) {
             printer("OOPS! The description of a event cannot be empty. " +
@@ -51,33 +61,66 @@ public class NovaGPT {
         }
         String[] split1 = text.split("/from", 2);
         String[] split2 = split1[1].split("/to", 2);
-        ls.add(new Event(split1[0].trim(), split2[0].trim(), split2[1].trim()));
+        Task t = new Event(split1[0].trim(), split2[0].trim(), split2[1].trim());
+        ls.add(t);
+        printer("Got it. I've added this task:\n"
+                + t.toString() + "\nNow you have "
+                + ls.size()
+                + " tasks in the list.");
     }
 
-    public static void handleMark(String input, Lists ls) {
+    public static void handleMark(String input, ArrayList<Task> ls) {
         int listNum = (input.charAt(5) - '0') - 1;
-        ls.mark(listNum);
-        printer(markedMessage + "\n" + ls.retriveTask(listNum).toString());
+        Task t = ls.get(listNum);
+        t.mark();
+        printer(markedMessage + "\n" + t.toString());
     }
 
-    public static void handleUnMark(String input, Lists ls) {
+    public static void handleUnMark(String input, ArrayList<Task> ls) {
         int listNum = (input.charAt(7) - '0') - 1;
-        ls.unMark(listNum);
-        printer(unMarkedMessage + "\n" + ls.retriveTask(listNum).toString());
+        Task t = ls.get(listNum);
+        t.unMark();
+        printer(unMarkedMessage + "\n" + t.toString());
+    }
+
+    public static String handleList(ArrayList<Task> ls) {
+        String output  = "";
+        int count = ls.size();
+        for(int j = 0; j < count; j++) {
+            if (j < count - 1) {
+                output += (j + 1) + ". " + ls.get(j).toString() + "\n";
+            } else {
+                output += (j + 1) + ". " + ls.get(j).toString();
+            }
+        }
+        return output;
+    }
+
+    public static void handleDelete(String input, ArrayList<Task> ls) {
+        int listNum = (input.charAt(7) - '0') - 1;
+        if (listNum > ls.size() || listNum < 0) {
+            printer(listNum + "OOPS! I couldn't find the task to delete, please enter a number within the range ");
+            return;
+        }
+        printer("Noted. I've removed this task:\n"
+                + ls.get(listNum).toString() + "\nNow you have "
+                + (ls.size() - 1)
+                + " tasks in the list.");
+        ls.remove(listNum);
     }
 
     public static void run() {
         printer(welcomeMessage);
         String input = "";
         Scanner sc = new Scanner(System.in);
-        Lists ls = new Lists(100);
+        ArrayList<Task> ls = new ArrayList<>();
 
         while(!input.toLowerCase().equals(killswitch)) {
             input = sc.nextLine();
             if (input.toLowerCase().equals(killswitch)) {
                 break;
             } else if (input.toLowerCase().equals("list")) {
-                printer(ls.toString());
+                printer(handleList(ls));
             } else if (input.toLowerCase().startsWith("mark")) {
                 handleMark(input, ls);
             } else if (input.toLowerCase().startsWith("unmark")) {
@@ -88,6 +131,8 @@ public class NovaGPT {
                 handlerDeadlineTask(input, ls);
             } else if (input.toLowerCase().startsWith("event")) {
                 handlerEventTask(input, ls);
+            } else if (input.toLowerCase().startsWith("delete")){
+                handleDelete(input, ls);
             } else {
                 printer("Hold up! I'm sorry but I don't get what that means, please try again :-(");
             }
