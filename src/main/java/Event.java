@@ -12,9 +12,9 @@ public class Event extends Task{
     public String toString() {
         return "[E]"
                 + super.toString()
-                + "(from:"
+                + " (from: "
                 + this.startTimeAndDate
-                + " to:"
+                + " to: "
                 + this.endTimeAndDate + ")";
     }
 }
