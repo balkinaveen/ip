@@ -9,6 +9,31 @@ public class NovaGPT {
     private static final String unMarkedMessage = "OK, I've marked this task as not done yet:";
     private static final String killswitch = "bye";
 
+    public enum Command {
+        BYE,
+        LIST,
+        MARK,
+        UNMARK,
+        TODO,
+        DEADLINE,
+        EVENT,
+        DELETE,
+        UNKNOWN
+    }
+
+    public static Command parseCommandFromInput(String input) {
+        String lowerCaseInput = input.toLowerCase();
+        if (input.equals(killswitch)) return Command.BYE;
+        if (input.equals("list")) return Command.LIST;
+        if (input.startsWith("mark")) return Command.MARK;
+        if (input.startsWith("unmark")) return Command.UNMARK;
+        if (input.startsWith("todo")) return Command.TODO;
+        if (input.startsWith("deadline")) return Command.DEADLINE;
+        if (input.startsWith("event")) return Command.EVENT;
+        if (input.startsWith("delete")) return Command.DELETE;
+        return Command.UNKNOWN;
+    }
+
     public static void printer(String message) {
         System.out.print(horizontalLine + "\n" + message + "\n" + horizontalLine + "\n");
     }
@@ -115,26 +140,38 @@ public class NovaGPT {
         Scanner sc = new Scanner(System.in);
         ArrayList<Task> ls = new ArrayList<>();
 
+
         while(!input.toLowerCase().equals(killswitch)) {
             input = sc.nextLine();
-            if (input.toLowerCase().equals(killswitch)) {
-                break;
-            } else if (input.toLowerCase().equals("list")) {
-                printer(handleList(ls));
-            } else if (input.toLowerCase().startsWith("mark")) {
-                handleMark(input, ls);
-            } else if (input.toLowerCase().startsWith("unmark")) {
-                handleUnMark(input, ls);
-            } else if (input.toLowerCase().startsWith("todo")) {
-                handlerTodoTask(input, ls);
-            } else if (input.toLowerCase().startsWith("deadline")) {
-                handlerDeadlineTask(input, ls);
-            } else if (input.toLowerCase().startsWith("event")) {
-                handlerEventTask(input, ls);
-            } else if (input.toLowerCase().startsWith("delete")){
-                handleDelete(input, ls);
-            } else {
-                printer("Hold up! I'm sorry but I don't get what that means, please try again :-(");
+            Command command = parseCommandFromInput(input);
+
+            switch (command) {
+                case BYE:
+                    break;
+                case LIST:
+                    printer(handleList(ls));
+                    break;
+                case MARK:
+                    handleMark(input, ls);
+                    break;
+                case UNMARK:
+                    handleUnMark(input, ls);
+                    break;
+                case TODO:
+                    handlerTodoTask(input, ls);
+                    break;
+                case DEADLINE:
+                    handlerDeadlineTask(input, ls);
+                    break;
+                case EVENT:
+                    handlerEventTask(input, ls);
+                    break;
+                case DELETE:
+                    handleDelete(input, ls);
+                    break;
+                case UNKNOWN:
+                    printer("Hold up! I'm sorry but I don't get what that means, please try again :-(");
+                    break;
             }
         }
         printer(goodbyeMessage);
