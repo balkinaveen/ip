@@ -38,7 +38,8 @@ public class NovaGPT {
             printer(unMarkedMessage + "\n" + ls.retriveTask(listNum).toString());
             continue;
             } else if(input.toLowerCase().startsWith("todo")) {
-                ls.add(new Todo(input));
+                String text = input.substring(4);
+                ls.add(new Todo(text));
                 continue;
             } else if(input.toLowerCase().startsWith("deadline")) {
                 String text = input.substring(8);
@@ -46,14 +47,14 @@ public class NovaGPT {
                 ls.add(new Deadline(split[0], split[1]));
                 continue;
             } else if(input.toLowerCase().startsWith("event")) {
-                String text = input.substring(8);
+                String text = input.substring(5);
                 String[] split1 = text.split("/from", 2);
                 String[] split2 = split1[1].split("/to", 2);
                 ls.add(new Event(split1[0], split2[0], split2[1]));
                 continue;
             }
             //ls.add(new Task(input));
-            printer("invalid input");
+            printer("Hold up! I'm sorry but I don't get what that means, please try again :-(");
         }
 
         printer(goodbyeMessage);
