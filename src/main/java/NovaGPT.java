@@ -2,12 +2,12 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class NovaGPT {
-    private static final String welcomeMessage = "Hello, I'm NovaGPT!\nWhat can I do for you today?";
-    private static final String goodbyeMessage = "Bye. Hope to see you soon!\nHAND!";
-    private static final String horizontalLine = "____________________________________________________________";
-    private static final String markedMessage = "Nice! I've marked this task as done:";
-    private static final String unMarkedMessage = "OK, I've marked this task as not done yet:";
-    private static final String killswitch = "bye";
+    private static final String WELCOME_MESSAGE = "Hello, I'm NovaGPT!\nWhat can I do for you today?";
+    private static final String GOODBYE_MESSAGE = "Bye. Hope to see you soon!\nHAND!";
+    private static final String HORIZONTAL_LINE = "____________________________________________________________";
+    private static final String MARKED_MESSAGE = "Nice! I've marked this task as done:";
+    private static final String UNMARKED_MESSAGE = "OK, I've marked this task as not done yet:";
+    private static final String KILL_SWITCH = "bye";
 
     public enum Command {
         BYE,
@@ -23,7 +23,7 @@ public class NovaGPT {
 
     public static Command parseCommandFromInput(String input) {
         String lowerCaseInput = input.toLowerCase();
-        if (input.equals(killswitch)) return Command.BYE;
+        if (input.equals(KILL_SWITCH)) return Command.BYE;
         if (input.equals("list")) return Command.LIST;
         if (input.startsWith("mark")) return Command.MARK;
         if (input.startsWith("unmark")) return Command.UNMARK;
@@ -34,53 +34,66 @@ public class NovaGPT {
         return Command.UNKNOWN;
     }
 
-    public static void printer(String message) {
-        System.out.print(horizontalLine + "\n" + message + "\n" + horizontalLine + "\n");
+    public static int parseTaskIndex(String input, String command) throws NovaException {
+        try {
+            String numberString = input.substring(command.length()).trim();
+            int index = Integer.parseInt(numberString) - 1;
+            if (index < 0) {
+                throw new NovaException("OOPS! The task number must be positive!");
+            }
+            return index;
+        } catch (NumberFormatException e) {
+            throw new NovaException("OOPS! Please enter a valid number! \nDo format your input: " + command + " <number>");
+        }
     }
 
-    public static void handlerTodoTask(String input, ArrayList<Task> ls) {
+    public static void print(String message) {
+        System.out.print(HORIZONTAL_LINE + "\n" + message + "\n" + HORIZONTAL_LINE + "\n");
+    }
+
+    public static void handleTodoTask(String input, ArrayList<Task> ls) {
         String text = input.substring(4).trim();
         if (text.isEmpty()) {
-            printer("OOPS! The description of a todo cannot be empty. " +
+            print("OOPS! The description of a todo cannot be empty. " +
                     "\nDo format your input: todo <task>");
             return;
         }
         Task t = new Todo(text);
         ls.add(t);
-        printer("Got it. I've added this task:\n"
+        print("Got it. I've added this task:\n"
                 + t.toString() + "\nNow you have "
                 + ls.size()
                 + " tasks in the list.");
     }
 
-    public static void handlerDeadlineTask(String input, ArrayList<Task> ls) {
+    public static void handleDeadlineTask(String input, ArrayList<Task> ls) {
         String text = input.substring(8).trim();
         if (text.isEmpty()) {
-            printer("OOPS! The description of a deadline cannot be empty. " +
+            print("OOPS! The description of a deadline cannot be empty. " +
                     "\nDo format your input: deadline <task> /by <deadline>");
             return;
         } else if (!input.contains("/by")) {
-            printer("OOPS! The description of a deadline must contain /by. " +
+            print("OOPS! The description of a deadline must contain /by. " +
                     "\nDo format your input: deadline <task> /by <deadline>");
             return;
         }
         String[] split = text.split("/by", 2);
         Task t = new Deadline(split[0].trim(),split[1].trim());
         ls.add(t);
-        printer("Got it. I've added this task:\n"
+        print("Got it. I've added this task:\n"
                 + t.toString() + "\nNow you have "
                 + ls.size()
                 + " tasks in the list.");
     }
 
-    public static void handlerEventTask(String input, ArrayList<Task> ls) {
+    public static void handleEventTask(String input, ArrayList<Task> ls) {
         String text = input.substring(5).trim();
         if (text.isEmpty()) {
-            printer("OOPS! The description of a event cannot be empty. " +
+            print("OOPS! The description of a event cannot be empty. " +
                     "\nDo format your input: event <task> /from <start> /to <end>");
             return;
         } else if (!input.contains("/from") || !input.contains("/to")) {
-            printer("OOPS! The description of a event must contain /by. " +
+            print("OOPS! The description of a event must contain /by. " +
                     "\nDo format your input: event <task> /from <start> /to <end>");
             return;
         }
@@ -88,24 +101,30 @@ public class NovaGPT {
         String[] split2 = split1[1].split("/to", 2);
         Task t = new Event(split1[0].trim(), split2[0].trim(), split2[1].trim());
         ls.add(t);
-        printer("Got it. I've added this task:\n"
+        print("Got it. I've added this task:\n"
                 + t.toString() + "\nNow you have "
                 + ls.size()
                 + " tasks in the list.");
     }
 
-    public static void handleMark(String input, ArrayList<Task> ls) {
-        int listNum = (input.charAt(5) - '0') - 1;
+    public static void handleMark(String input, ArrayList<Task> ls) throws NovaException{
+        int listNum = parseTaskIndex(input, "mark");
+        if (listNum >= ls.size()) {
+            throw new NovaException("OOPS! Task number is out of range! Try again");
+        }
         Task t = ls.get(listNum);
         t.mark();
-        printer(markedMessage + "\n" + t.toString());
+        print(MARKED_MESSAGE + "\n" + t.toString());
     }
 
-    public static void handleUnMark(String input, ArrayList<Task> ls) {
-        int listNum = (input.charAt(7) - '0') - 1;
+    public static void handleUnMark(String input, ArrayList<Task> ls) throws NovaException {
+        int listNum = parseTaskIndex(input, "unmark");
+        if (listNum >= ls.size()) {
+            throw new NovaException("OOPS! Task number is out of range! Try again");
+        }
         Task t = ls.get(listNum);
         t.unMark();
-        printer(unMarkedMessage + "\n" + t.toString());
+        print(UNMARKED_MESSAGE + "\n" + t.toString());
     }
 
     public static String handleList(ArrayList<Task> ls) {
@@ -121,60 +140,63 @@ public class NovaGPT {
         return output;
     }
 
-    public static void handleDelete(String input, ArrayList<Task> ls) {
-        int listNum = (input.charAt(7) - '0') - 1;
-        if (listNum > ls.size() || listNum < 0) {
-            printer(listNum + "OOPS! I couldn't find the task to delete, please enter a number within the range ");
-            return;
+    public static void handleDelete(String input, ArrayList<Task> ls) throws NovaException {
+        int listNum = parseTaskIndex(input, "delete");
+        if (listNum >= ls.size()) {
+            throw new NovaException("OOPS! Task number is out of range! Try again");
         }
-        printer("Noted. I've removed this task:\n"
-                + ls.get(listNum).toString() + "\nNow you have "
-                + (ls.size() - 1)
+        Task removed = ls.remove(listNum);
+        print("Noted. I've removed this task:\n"
+                + removed.toString() + "\nNow you have "
+                + ls.size()
                 + " tasks in the list.");
-        ls.remove(listNum);
     }
 
     public static void run() {
-        printer(welcomeMessage);
+        print(WELCOME_MESSAGE);
         String input = "";
         Scanner sc = new Scanner(System.in);
         ArrayList<Task> ls = new ArrayList<>();
 
 
-        while(!input.toLowerCase().equals(killswitch)) {
+        while(!input.toLowerCase().equals(KILL_SWITCH)) {
             input = sc.nextLine();
             Command command = parseCommandFromInput(input);
-
-            switch (command) {
-                case BYE:
-                    break;
-                case LIST:
-                    printer(handleList(ls));
-                    break;
-                case MARK:
-                    handleMark(input, ls);
-                    break;
-                case UNMARK:
-                    handleUnMark(input, ls);
-                    break;
-                case TODO:
-                    handlerTodoTask(input, ls);
-                    break;
-                case DEADLINE:
-                    handlerDeadlineTask(input, ls);
-                    break;
-                case EVENT:
-                    handlerEventTask(input, ls);
-                    break;
-                case DELETE:
-                    handleDelete(input, ls);
-                    break;
-                case UNKNOWN:
-                    printer("Hold up! I'm sorry but I don't get what that means, please try again :-(");
-                    break;
+            try {
+                switch (command) {
+                    case BYE:
+                        break;
+                    case LIST:
+                        print(handleList(ls));
+                        break;
+                    case MARK:
+                        handleMark(input, ls);
+                        break;
+                    case UNMARK:
+                        handleUnMark(input, ls);
+                        break;
+                    case TODO:
+                        handleTodoTask(input, ls);
+                        break;
+                    case DEADLINE:
+                        handleDeadlineTask(input, ls);
+                        break;
+                    case EVENT:
+                        handleEventTask(input, ls);
+                        break;
+                    case DELETE:
+                        handleDelete(input, ls);
+                        break;
+                    case UNKNOWN:
+                        throw new NovaException("Hold up! I'm sorry but I don't get what that means, please try again :-(");
+                }
+            } catch (NovaException e) {
+                    print(e.getMessage());
+            } catch (Exception e) {
+                    print("Unexpected error: " + e.getMessage());
             }
         }
-        printer(goodbyeMessage);
+        print(GOODBYE_MESSAGE);
     }
 
     public static void main(String[] args) {
