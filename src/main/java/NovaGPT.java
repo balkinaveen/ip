@@ -68,15 +68,15 @@ public class NovaGPT {
                 + " tasks in the list.");
     }
 
-    public static void handleDeadlineTask(String input, ArrayList<Task> ls, Storage st) {
+    public static void handleDeadlineTask(String input, ArrayList<Task> ls, Storage st) throws NovaException{
         String text = input.substring(8).trim();
         if (text.isEmpty()) {
             print("OOPS! The description of a deadline cannot be empty. " +
-                    "\nDo format your input: deadline <task> /by <deadline>");
+                    "\nDo format your input: deadline <task> /by <deadline> DD/MM/YYYY HHMM (24 hour)");
             return;
         } else if (!input.contains("/by")) {
             print("OOPS! The description of a deadline must contain /by. " +
-                    "\nDo format your input: deadline <task> /by <deadline>");
+                    "\nDo format your input: deadline <task> /by <deadline> DD/MM/YYYY HHMM (24 hour)");
             return;
         }
         String[] split = text.split("/by", 2);
@@ -89,15 +89,15 @@ public class NovaGPT {
                 + " tasks in the list.");
     }
 
-    public static void handleEventTask(String input, ArrayList<Task> ls, Storage st) {
+    public static void handleEventTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         String text = input.substring(5).trim();
         if (text.isEmpty()) {
             print("OOPS! The description of a event cannot be empty. " +
-                    "\nDo format your input: event <task> /from <start> /to <end>");
+                    "\nDo format your input: event <task> /from <start> DD/MM/YYYY HHMM (24 hour) /to <end> DD/MM/YYYY HHMM (24 hour)");
             return;
         } else if (!input.contains("/from") || !input.contains("/to")) {
             print("OOPS! The description of a event must contain /by. " +
-                    "\nDo format your input: event <task> /from <start> /to <end>");
+                    "\nDo format your input: event <task> /from <start> DD/MM/YYYY HHMM (24 hour) /to <end> DD/MM/YYYY HHMM (24 hour)");
             return;
         }
         String[] split1 = text.split("/from", 2);

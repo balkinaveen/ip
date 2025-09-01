@@ -1,9 +1,26 @@
-public class Deadline extends Task{
-    protected String deadline;
+import javax.xml.crypto.Data;
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-    public Deadline(String description, String deadline) {
+public class Deadline extends Task{
+    //protected String deadlineDateFormat;
+    protected LocalDateTime deadlineDateFormat;
+    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
+
+    public Deadline(String description, String deadline) throws NovaException{
         super(description);
-        this.deadline = deadline;
+        try {
+            this.deadlineDateFormat = LocalDateTime.parse(deadline, INPUT_FORMAT);
+        } catch (DateTimeException e) {
+            throw new NovaException("OOPS! Wrong format, please key in date and time in DD/MM/YYYY HHMM (24 hour) format");
+        }
+    }
+
+    public Deadline(String description, LocalDateTime deadline) {
+        super(description);
+        this.deadlineDateFormat = deadline;
     }
 
     @Override
@@ -11,7 +28,7 @@ public class Deadline extends Task{
         return "[D]"
                 + super.toString()
                 + " (by: "
-                + deadline
+                + deadlineDateFormat.format(OUTPUT_FORMAT)
                 + ")";
     }
 }
