@@ -1,4 +1,5 @@
 import java.nio.file.Files;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.nio.file.Path;
@@ -7,6 +8,7 @@ import java.io.IOException;
 
 public class Storage {
     private final Path filePath;
+    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
 
     public Storage(String filepath) {
         this.filePath = Paths.get(filepath);
@@ -74,9 +76,9 @@ public class Storage {
                 if (t instanceof Todo) {
                     line = String.join(" | ", "T", status, t.taskDescription);
                 } else if (t instanceof Deadline) {
-                    line = String.join(" | ", "D", status, t.taskDescription, ((Deadline) t).deadline);
+                    line = String.join(" | ", "D", status, t.taskDescription, ((Deadline) t).deadlineDateFormat.format(FORMAT));
                 } else if (t instanceof Event) {
-                    line = String.join(" | ", "E", status, t.taskDescription, ((Event) t).startTimeAndDate, ((Event) t).endTimeAndDate);
+                    line = String.join(" | ", "E", status, t.taskDescription, ((Event) t).startTimeAndDate.format(FORMAT), ((Event) t).endTimeAndDate.format(FORMAT));
                 } else {
                     continue;
                 }
