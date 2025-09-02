@@ -41,6 +41,11 @@ public class TaskList {
             return;
         }
         String[] split = text.split("/by", 2);
+        if (split[0].trim().isEmpty()) {
+            Ui.print("OOPS! The description of a event cannot be empty. " +
+                    "\nDo format your input: deadline <task> /by <deadline> DD/MM/YYYY HHMM (24 hour)");
+            return;
+        }
         Task t = new Deadline(split[0].trim(),split[1].trim());
         ls.add(t);
         st.save(ls);
@@ -57,12 +62,17 @@ public class TaskList {
                     "\nDo format your input: event <task> /from <start> DD/MM/YYYY HHMM (24 hour) /to <end> DD/MM/YYYY HHMM (24 hour)");
             return;
         } else if (!input.contains("/from") || !input.contains("/to")) {
-            Ui.print("OOPS! The description of a event must contain /by. " +
+            Ui.print("OOPS! The description of an event must contain /by. " +
                     "\nDo format your input: event <task> /from <start> DD/MM/YYYY HHMM (24 hour) /to <end> DD/MM/YYYY HHMM (24 hour)");
             return;
         }
         String[] split1 = text.split("/from", 2);
         String[] split2 = split1[1].split("/to", 2);
+        if (split1[0].trim().isEmpty()) {
+            Ui.print("OOPS! The description of an event cannot be empty. " +
+                    "\nDo format your input: event <task> /from <start> DD/MM/YYYY HHMM (24 hour) /to <end> DD/MM/YYYY HHMM (24 hour)");
+            return;
+        }
         Task t = new Event(split1[0].trim(), split2[0].trim(), split2[1].trim());
         ls.add(t);
         st.save(ls);
