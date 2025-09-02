@@ -1,3 +1,5 @@
+package NovaGPT.ui;
+
 public class Ui {
 
     private static final String HORIZONTAL_LINE = "____________________________________________________________";

@@ -1,3 +1,7 @@
+package NovaGPT.command;
+
+import NovaGPT.exception.NovaException;
+
 public class Parser {
     private static final String KILL_SWITCH = "bye";
 

@@ -1,6 +1,8 @@
+package NovaGPT.task;
+
 public class Task {
-    protected final String taskDescription;
-    protected boolean isDone;
+    private final String taskDescription;
+    private boolean isDone;
 
     public Task(String taskDescription) {
         this.taskDescription = taskDescription;
@@ -17,6 +19,14 @@ public class Task {
 
     public String getStatusIcon() {
         return (isDone ? "[X] " : "[ ] ");
+    }
+
+    public boolean getStatus() {
+        return isDone;
+    }
+
+    public String getTaskDescription() {
+        return this.taskDescription;
     }
 
     @Override

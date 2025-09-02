@@ -1,3 +1,5 @@
+package NovaGPT.command;
+
 public enum Command {
     BYE,
     LIST,

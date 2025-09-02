@@ -1,10 +1,13 @@
+package NovaGPT.task;
+
+import NovaGPT.exception.NovaException;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Event extends Task{
-    protected LocalDateTime startTimeAndDate;
-    protected LocalDateTime endTimeAndDate;
+    private LocalDateTime startTimeAndDate;
+    private LocalDateTime endTimeAndDate;
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
 
@@ -22,6 +25,14 @@ public class Event extends Task{
         super(description);
         this.startTimeAndDate = startTimeAndDate;
         this.endTimeAndDate = endTimeAndDate;
+    }
+
+    public LocalDateTime getStartTimeAndDate() {
+        return this.startTimeAndDate;
+    }
+
+    public LocalDateTime getEndTimeAndDate() {
+        return this.endTimeAndDate;
     }
 
     @Override

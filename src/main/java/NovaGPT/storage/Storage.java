@@ -1,3 +1,10 @@
+package NovaGPT.storage;
+
+import NovaGPT.task.Task;
+import NovaGPT.task.Todo;
+import NovaGPT.task.Deadline;
+import NovaGPT.task.Event;
+
 import java.nio.file.Files;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -72,13 +79,13 @@ public class Storage {
             for(int i = 0; i < tasks.size(); i++) {
                 String line = "";
                 Task t = tasks.get(i);
-                String status = t.isDone ? "1" : "0";
+                String status = t.getStatus() ? "1" : "0";
                 if (t instanceof Todo) {
-                    line = String.join(" | ", "T", status, t.taskDescription);
+                    line = String.join(" | ", "T", status, t.getTaskDescription());
                 } else if (t instanceof Deadline) {
-                    line = String.join(" | ", "D", status, t.taskDescription, ((Deadline) t).deadlineDateFormat.format(FORMAT));
+                    line = String.join(" | ", "D", status, t.getTaskDescription(), ((Deadline) t).getEndTimeAndDate().format(FORMAT));
                 } else if (t instanceof Event) {
-                    line = String.join(" | ", "E", status, t.taskDescription, ((Event) t).startTimeAndDate.format(FORMAT), ((Event) t).endTimeAndDate.format(FORMAT));
+                    line = String.join(" | ", "E", status, t.getTaskDescription(), ((Event) t).getStartTimeAndDate().format(FORMAT), ((Event) t).getEndTimeAndDate().format(FORMAT));
                 } else {
                     continue;
                 }
