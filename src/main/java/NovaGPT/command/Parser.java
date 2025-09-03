@@ -26,6 +26,7 @@ public class Parser {
         if (lowerCaseInput.startsWith("deadline")) return Command.DEADLINE;
         if (lowerCaseInput.startsWith("event")) return Command.EVENT;
         if (lowerCaseInput.startsWith("delete")) return Command.DELETE;
+        if (lowerCaseInput.startsWith("find")) return Command.FIND;
         return Command.UNKNOWN;
     }
 
