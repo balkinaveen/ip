@@ -38,7 +38,7 @@ public class NovaGPT {
         Storage st = new Storage(filePath);
         ArrayList<Task> ls = st.load();
 
-        while(!input.toLowerCase().equals(KILL_SWITCH)) {
+        while (!input.toLowerCase().equals(KILL_SWITCH)) {
             input = sc.nextLine();
             Command command = Parser.parseCommandFromInput(input);
             try {

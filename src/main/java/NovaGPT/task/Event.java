@@ -15,8 +15,10 @@ import java.time.format.DateTimeFormatter;
 public class Event extends Task{
     private LocalDateTime startTimeAndDate;
     private LocalDateTime endTimeAndDate;
-    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
-    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
+    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.
+            ofPattern("dd/MM/yyyy HHmm");
+    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.
+            ofPattern("MMM dd yyyy, h:mma");
 
     public Event(String description, String startTimeAndDate, String endTimeAndDate) throws NovaException{
         super(description);
@@ -24,7 +26,8 @@ public class Event extends Task{
             this.startTimeAndDate = LocalDateTime.parse(startTimeAndDate, INPUT_FORMAT);
             this.endTimeAndDate = LocalDateTime.parse(endTimeAndDate, INPUT_FORMAT);
         } catch (DateTimeException e) {
-            throw new NovaException("OOPS! Wrong format, please key in date and time in DD/MM/YYYY HHMM (24 hour) format");
+            throw new NovaException("OOPS! Wrong format, please key in date and time in DD/MM/YYYY HHMM " +
+                    "(24 hour) format");
         }
     }
 

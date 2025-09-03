@@ -19,7 +19,8 @@ import java.io.IOException;
  */
 public class Storage {
     private final Path filePath;
-    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+    private static final DateTimeFormatter FORMAT = DateTimeFormatter.
+            ofPattern("dd/MM/yyyy HHmm");
 
     public Storage(String filepath) {
         this.filePath = Paths.get(filepath);
@@ -104,11 +105,20 @@ public class Storage {
                 Task t = tasks.get(i);
                 String status = t.getStatus() ? "1" : "0";
                 if (t instanceof Todo) {
-                    line = String.join(" | ", "T", status, t.getTaskDescription());
+                    line = String.join(" | ", "T",
+                            status,
+                            t.getTaskDescription());
                 } else if (t instanceof Deadline) {
-                    line = String.join(" | ", "D", status, t.getTaskDescription(), ((Deadline) t).getEndTimeAndDate().format(FORMAT));
+                    line = String.join(" | ", "D",
+                            status,
+                            t.getTaskDescription(),
+                            ((Deadline) t).getEndTimeAndDate().format(FORMAT));
                 } else if (t instanceof Event) {
-                    line = String.join(" | ", "E", status, t.getTaskDescription(), ((Event) t).getStartTimeAndDate().format(FORMAT), ((Event) t).getEndTimeAndDate().format(FORMAT));
+                    line = String.join(" | ", "E",
+                            status,
+                            t.getTaskDescription(),
+                            ((Event) t).getStartTimeAndDate().format(FORMAT),
+                            ((Event) t).getEndTimeAndDate().format(FORMAT));
                 } else {
                     continue;
                 }
