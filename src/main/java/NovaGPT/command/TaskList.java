@@ -9,10 +9,22 @@ import NovaGPT.storage.Storage;
 import NovaGPT.exception.NovaException;
 import java.util.ArrayList;
 
+/**
+ * Represents a TaskList, which contains the handlers for Task orientated commands
+ * This class contains methods to handle Todo, Deadline, Event tasks
+ * as well as methods to handle mark, unmark, delete and list commands
+ */
 public class TaskList {
     private static final String MARKED_MESSAGE = "Nice! I've marked this task as done:";
     private static final String UNMARKED_MESSAGE = "OK, I've marked this task as not done yet:";
 
+    /**
+     * Handles Todo Tasks
+     * Takes in a user input String, ArrayList and Storage
+     * ensures that input is valid,
+     * creates a todo task, adds it to the Arraylist and prompts ui
+     * to print the respective output message
+     */
     public static void handleTodoTask(String input, ArrayList<Task> ls, Storage st) {
         String text = input.substring(4).trim();
         if (text.isEmpty()) {
@@ -29,6 +41,13 @@ public class TaskList {
                 + " tasks in the list.");
     }
 
+    /**
+     * Handles Deadline Tasks
+     * Takes in a user input String, ArrayList and Storage
+     * ensures that input is valid,
+     * creates a deadline task, adds it to the Arraylist and prompts ui
+     * to print the respective output message
+     */
     public static void handleDeadlineTask(String input, ArrayList<Task> ls, Storage st) throws NovaException{
         String text = input.substring(8).trim();
         if (text.isEmpty()) {
@@ -55,6 +74,13 @@ public class TaskList {
                 + " tasks in the list.");
     }
 
+    /**
+     * Handles Event Tasks
+     * Takes in a user input String, ArrayList and Storage
+     * ensures that input is valid,
+     * creates an event task, adds it to the Arraylist and prompts ui
+     * to print the respective output message
+     */
     public static void handleEventTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         String text = input.substring(5).trim();
         if (text.isEmpty()) {
@@ -82,6 +108,13 @@ public class TaskList {
                 + " tasks in the list.");
     }
 
+    /**
+     * Handles Mark Command
+     * Takes in a user input String
+     * ensures that input is valid and number is within range
+     * marks the corresponding task as done and
+     * prints the respective output message
+     */
     public static void handleMark(String input, ArrayList<Task> ls, Storage st) throws NovaException{
         int listNum = Parser.parseTaskIndex(input, "mark");
         if (listNum >= ls.size()) {
@@ -93,6 +126,13 @@ public class TaskList {
         Ui.print(MARKED_MESSAGE + "\n" + t.toString());
     }
 
+    /**
+     * Handles Unmark Command
+     * Takes in a user input String
+     * ensures that input is valid and number is within range
+     * unmarks the corresponding task as not done and
+     * prints the respective output message
+     */
     public static void handleUnMark(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         int listNum = Parser.parseTaskIndex(input, "unmark");
         if (listNum >= ls.size()) {
@@ -104,6 +144,12 @@ public class TaskList {
         Ui.print(UNMARKED_MESSAGE + "\n" + t.toString());
     }
 
+    /**
+     * Handles list Command
+     * Takes in an ArrayList
+     * for each task in ArrayList, adds the details to an outout string
+     * add returns the output string
+     */
     public static String handleList(ArrayList<Task> ls) {
         String output  = "";
         int count = ls.size();
@@ -117,6 +163,13 @@ public class TaskList {
         return output;
     }
 
+    /**
+     * Handles delete Command
+     * Takes in a user input String
+     * ensures that input is valid and number is within range
+     * deletes the corresponding task and
+     * prints the respective output message
+     */
     public static void handleDelete(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         int listNum = Parser.parseTaskIndex(input, "delete");
         if (listNum >= ls.size()) {
