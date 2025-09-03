@@ -26,7 +26,9 @@ public class Storage {
     }
 
     /**
-     * checks if the directory and file exists
+     * Returns an empty ArrayList if file not in directory
+     * and an ArrayList containing Tasks if file is in directory
+     * Checks if the directory and file exists
      * creates the directory and file if required
      * initialise an empty ArrayList
      * loads the tasks from the specified file into the ArrayList
@@ -57,8 +59,9 @@ public class Storage {
     }
 
     /**
-     * helper method
-     * Parses each line and re-creates the respective tasks with its details
+     * Returns Task
+     * helper method that parses each line and re-creates
+     * the respective tasks with its details
      */
     public Task parseLine(String line) {
         try {
@@ -89,6 +92,7 @@ public class Storage {
     }
 
     /**
+     * Saves tasks into specified file
      * for each task in list, it saves its details as a String in a pre-determined format
      * and writes it to the file specified.
      */

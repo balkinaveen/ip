@@ -31,7 +31,7 @@ public class Deadline extends Task{
     }
 
     /**
-     * gets the end time and date
+     * Returns the end time and date
      */
     public LocalDateTime getEndTimeAndDate() {
         return this.endTimeAndDate;

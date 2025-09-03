@@ -24,6 +24,10 @@ public class TaskList {
      * ensures that input is valid,
      * creates a todo task, adds it to the Arraylist and prompts ui
      * to print the respective output message
+     *
+     * @param input The input string that the user provides
+     * @param ls ArrayList containing all saved tasks
+     * @param st Storage object handling all storage related commands
      */
     public static void handleTodoTask(String input, ArrayList<Task> ls, Storage st) {
         String text = input.substring(4).trim();
@@ -47,6 +51,11 @@ public class TaskList {
      * ensures that input is valid,
      * creates a deadline task, adds it to the Arraylist and prompts ui
      * to print the respective output message
+     *
+     * @param input The input string that the user provides
+     * @param ls ArrayList containing all saved tasks
+     * @param st Storage object handling all storage related commands
+     * @throws NovaException If the input is invalid
      */
     public static void handleDeadlineTask(String input, ArrayList<Task> ls, Storage st) throws NovaException{
         String text = input.substring(8).trim();
@@ -80,6 +89,11 @@ public class TaskList {
      * ensures that input is valid,
      * creates an event task, adds it to the Arraylist and prompts ui
      * to print the respective output message
+     *
+     * @param input The input string that the user provides
+     * @param ls ArrayList containing all saved tasks
+     * @param st Storage object handling all storage related commands
+     * @throws NovaException If the input is invalid
      */
     public static void handleEventTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         String text = input.substring(5).trim();
@@ -114,6 +128,11 @@ public class TaskList {
      * ensures that input is valid and number is within range
      * marks the corresponding task as done and
      * prints the respective output message
+     *
+     * @param input The input string that the user provides
+     * @param ls ArrayList containing all saved tasks
+     * @param st Storage object handling all storage related commands
+     * @throws NovaException If the input is invalid
      */
     public static void handleMark(String input, ArrayList<Task> ls, Storage st) throws NovaException{
         int listNum = Parser.parseTaskIndex(input, "mark");
@@ -132,6 +151,11 @@ public class TaskList {
      * ensures that input is valid and number is within range
      * unmarks the corresponding task as not done and
      * prints the respective output message
+     *
+     * @param input The input string that the user provides
+     * @param ls ArrayList containing all saved tasks
+     * @param st Storage object handling all storage related commands
+     * @throws NovaException If the input is invalid
      */
     public static void handleUnMark(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         int listNum = Parser.parseTaskIndex(input, "unmark");
@@ -145,10 +169,14 @@ public class TaskList {
     }
 
     /**
+     * Returns a list of tasks
      * Handles list Command
      * Takes in an ArrayList
      * for each task in ArrayList, adds the details to an outout string
      * add returns the output string
+     *s
+     * @param ls ArrayList containing all saved tasks
+     * @return A list of task in a set format
      */
     public static String handleList(ArrayList<Task> ls) {
         String output  = "";
@@ -169,6 +197,11 @@ public class TaskList {
      * ensures that input is valid and number is within range
      * deletes the corresponding task and
      * prints the respective output message
+     *
+     * @param input The input string that the user provides
+     * @param ls ArrayList containing all saved tasks
+     * @param st Storage object handling all storage related commands
+     * @throws NovaException If the input is invalid
      */
     public static void handleDelete(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         int listNum = Parser.parseTaskIndex(input, "delete");

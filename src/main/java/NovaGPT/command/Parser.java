@@ -11,8 +11,10 @@ public class Parser {
     private static final String KILL_SWITCH = "bye";
 
     /**
-     * Takes in an input String and uses an "if" logic to check the start of
-     * input and returns the respective command
+     * Returns the respective command based on user inputs
+     *
+     * @param input The input string that the user provides
+     * @return Command
      */
     public static Command parseCommandFromInput(String input) {
         String lowerCaseInput = input.toLowerCase();
@@ -28,8 +30,13 @@ public class Parser {
     }
 
     /**
-     * Takes in an input String and a command String, extracts the
-     * number from the input and returns it as a zero-indexed integer
+     * Returns the specified item as a zero-indexed integer
+     * If the input is not valid, throws an error
+     *
+     * @param input The input string that the user provides
+     * @param command The command string tied to the user input
+     * @return Zero-indexed integer
+     * @throws NovaException if input is invalid
      */
     public static int parseTaskIndex(String input, String command) throws NovaException {
         try {

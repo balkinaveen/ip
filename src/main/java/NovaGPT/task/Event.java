@@ -35,14 +35,14 @@ public class Event extends Task{
     }
 
     /**
-     * gets the start time and date
+     * Gets the start time and date
      */
     public LocalDateTime getStartTimeAndDate() {
         return this.startTimeAndDate;
     }
 
     /**
-     * gets the end time and date
+     * Gets the end time and date
      */
     public LocalDateTime getEndTimeAndDate() {
         return this.endTimeAndDate;

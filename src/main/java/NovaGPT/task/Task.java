@@ -16,21 +16,21 @@ public abstract class Task {
     }
 
     /**
-     * marks a task as done
+     * Marks a task as done
      */
     public void mark() {
         isDone = true;
     }
 
     /**
-     * unmarks a task as not done
+     * Unmarks a task as not done
      */
     public void unMark() {
         isDone = false;
     }
 
     /**
-     * gets the completion status of a task and converts it in an icon to
+     * Gets the completion status of a task and converts it in an icon to
      * be used in toString method
      */
     public String getStatusIcon() {
@@ -45,7 +45,7 @@ public abstract class Task {
     }
 
     /**
-     * gets the description of the task
+     * Gets the description of the task
      */
     public String getTaskDescription() {
         return this.taskDescription;
