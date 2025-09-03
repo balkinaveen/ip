@@ -27,7 +27,10 @@ public class Parser {
             }
             return index;
         } catch (NumberFormatException e) {
-            throw new NovaException("OOPS! Please enter a valid number! \nDo format your input: " + command + " <number>");
+            throw new NovaException("OOPS! Please enter a valid number! "
+                    + "\nDo format your input: "
+                    + command
+                    + " <number>");
         }
     }
 

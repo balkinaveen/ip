@@ -22,7 +22,7 @@ public class NovaGPT {
         Storage st = new Storage(filePath);
         ArrayList<Task> ls = st.load();
 
-        while(!input.toLowerCase().equals(KILL_SWITCH)) {
+        while (!input.toLowerCase().equals(KILL_SWITCH)) {
             input = sc.nextLine();
             Command command = Parser.parseCommandFromInput(input);
             try {
@@ -51,7 +51,8 @@ public class NovaGPT {
                         TaskList.handleDelete(input, ls, st);
                         break;
                     case UNKNOWN:
-                        throw new NovaException("Hold up! I'm sorry but I don't get what that means, please try again :-(");
+                        throw new NovaException("Hold up! I'm sorry but I don't get what that means, " +
+                                "please try again :-(");
                 }
             } catch (NovaException e) {
                     Ui.print(e.getMessage());
