@@ -50,6 +50,9 @@ public class NovaGPT {
                     case DELETE:
                         TaskList.handleDelete(input, ls, st);
                         break;
+                    case FIND:
+                        TaskList.handleFind(input, ls, st);
+                        break;
                     case UNKNOWN:
                         throw new NovaException("Hold up! I'm sorry but I don't get what that means, please try again :-(");
                 }

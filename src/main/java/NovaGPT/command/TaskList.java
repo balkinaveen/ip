@@ -129,4 +129,29 @@ public class TaskList {
                 + ls.size()
                 + " tasks in the list.");
     }
+
+    /**
+     * Handles find Command
+     * Takes in a user input String
+     * ensures that input is valid
+     * finds all tasks containing the search String and
+     * prints a list
+     */
+    public static void handleFind(String input, ArrayList<Task> ls, Storage st) throws NovaException {
+        String searchString = input.substring(4).trim();
+        if (searchString.isEmpty()) {
+            Ui.print("OOPS! The description of find cannot be empty. " +
+                    "\nDo format your input: find <keyword(s) to search> ");
+            return;
+        }
+        String output = "";
+        int Counter = 1;
+        for (int i = 0; i < ls.size(); i++) {
+            Task task = ls.get(i);
+            if(task.getTaskDescription().contains(searchString)) {
+                output +=  "\n" + Counter + "." + task;
+            }
+        }
+        Ui.print("Here are the matching tasks in your list:" + output );
+    }
 }
