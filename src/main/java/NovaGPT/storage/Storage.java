@@ -13,6 +13,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
 
+/**
+ * Represents a Storage class, which reads and writes from a txt file
+ * This class contains methods to load and save tasks
+ */
 public class Storage {
     private final Path filePath;
     private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
@@ -21,6 +25,15 @@ public class Storage {
         this.filePath = Paths.get(filepath);
     }
 
+    /**
+     * Returns an empty ArrayList if file not in directory
+     * and an ArrayList containing Tasks if file is in directory
+     * Checks if the directory and file exists
+     * creates the directory and file if required
+     * initialise an empty ArrayList
+     * loads the tasks from the specified file into the ArrayList
+     * returns the ArrayList
+     */
     public ArrayList<Task> load(){
         ArrayList<Task> tasks = new ArrayList<>();
         try {
@@ -45,6 +58,11 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Returns Task
+     * helper method that parses each line and re-creates
+     * the respective tasks with its details
+     */
     public Task parseLine(String line) {
         try {
             String[] details = line.split("\\|");
@@ -73,6 +91,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves tasks into specified file
+     * for each task in list, it saves its details as a String in a pre-determined format
+     * and writes it to the file specified.
+     */
     public void save(ArrayList<Task> tasks) {
         try {
             List<String> lines = new ArrayList<>();

@@ -2,9 +2,20 @@ package NovaGPT.command;
 
 import NovaGPT.exception.NovaException;
 
+/**
+ * Represents a Parser class, entails all the parsing methods
+ * related to user inputs.
+ * Extracts commands and integers from user inputs
+ */
 public class Parser {
     private static final String KILL_SWITCH = "bye";
 
+    /**
+     * Returns the respective command based on user inputs
+     *
+     * @param input The input string that the user provides
+     * @return Command
+     */
     public static Command parseCommandFromInput(String input) {
         String lowerCaseInput = input.toLowerCase();
         if (lowerCaseInput.equals(KILL_SWITCH)) return Command.BYE;
@@ -18,6 +29,15 @@ public class Parser {
         return Command.UNKNOWN;
     }
 
+    /**
+     * Returns the specified item as a zero-indexed integer
+     * If the input is not valid, throws an error
+     *
+     * @param input The input string that the user provides
+     * @param command The command string tied to the user input
+     * @return Zero-indexed integer
+     * @throws NovaException if input is invalid
+     */
     public static int parseTaskIndex(String input, String command) throws NovaException {
         try {
             String numberString = input.substring(command.length()).trim();

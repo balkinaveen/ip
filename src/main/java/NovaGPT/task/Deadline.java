@@ -5,6 +5,12 @@ import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a Deadline task
+ * Each task has a description, a completion status, an end Time and Date.
+ * Takes in a specific format of Date and Time and
+ * outputs a set format of Date and Time
+ */
 public class Deadline extends Task{
     private LocalDateTime endTimeAndDate;
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
@@ -24,6 +30,9 @@ public class Deadline extends Task{
         this.endTimeAndDate = deadline;
     }
 
+    /**
+     * Returns the end time and date
+     */
     public LocalDateTime getEndTimeAndDate() {
         return this.endTimeAndDate;
     }

@@ -5,6 +5,13 @@ import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents an Event task
+ * Each task has a description, a completion status,
+ * a start Time and Date and an end Time and Date.
+ * Takes in a specific format of Date and Time and
+ * outputs a set format of Date and Time
+ */
 public class Event extends Task{
     private LocalDateTime startTimeAndDate;
     private LocalDateTime endTimeAndDate;
@@ -27,10 +34,16 @@ public class Event extends Task{
         this.endTimeAndDate = endTimeAndDate;
     }
 
+    /**
+     * Gets the start time and date
+     */
     public LocalDateTime getStartTimeAndDate() {
         return this.startTimeAndDate;
     }
 
+    /**
+     * Gets the end time and date
+     */
     public LocalDateTime getEndTimeAndDate() {
         return this.endTimeAndDate;
     }
