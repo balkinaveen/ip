@@ -18,9 +18,28 @@ import java.util.ArrayList;
  * @since   2025-08-12
  */
 public class NovaGPT {
-    private static final String WELCOME_MESSAGE = "Hello, I'm NovaGPT!\nWhat can I do for you today?";
+    private static final String WELCOME_MESSAGE =
+            " _   _                  ____ ____ _____ \n" +
+            "| \\ | | _____   ____ _ / ___|  _ \\_   _| \n" +
+            "|  \\| |/ _ \\ \\ / / _` | |  _| |_) || |  \n" +
+            "| |\\  | (_) \\ V / (_| | |_| |  __/ | |   \n" +
+            "|_| \\_|\\___/ \\_/ \\__,_|\\____|_|    |_|\n" +
+            "\n" +
+            "Hello! What can I do for you today?";
     private static final String GOODBYE_MESSAGE = "Bye. Hope to see you soon!\nHAND!";
     private static final String KILL_SWITCH = "bye";
+    private static final String LIST_OF_COMMANDS =
+            """
+                    List of valid commands:\s
+                    todo <task name>\s
+                    deadline <task name> /by <deadline>\s
+                    event <task name> /from <start time> /to <end time>\s
+                    find <Task number>\s
+                    delete <Task number>\s
+                    mark <Task number>\s
+                    unmark <Task number>\s
+                    list\s
+                    Bye""";
 
     /**
      * Starts the main program loop.
@@ -69,8 +88,14 @@ public class NovaGPT {
                 case FIND:
                     TaskList.handleFind(input, ls, st);
                     break;
+                case MAN:
+                    Ui.print(LIST_OF_COMMANDS);
+                    break;
                 case UNKNOWN:
-                    throw new NovaException("Hold up! I'm sorry but I don't get what that means, please try again :-(");
+                    throw new NovaException("Hold up! I'm sorry! \n" +
+                            "I don't get what that means, please try again :-( \n" +
+                            "Prompt 'man' for help"
+                            );
                 }
             } catch (NovaException e) {
                     Ui.print(e.getMessage());

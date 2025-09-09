@@ -16,5 +16,6 @@ public enum Command {
     EVENT,
     DELETE,
     FIND,
+    MAN,
     UNKNOWN
 }
