@@ -1,4 +1,4 @@
-package NovaGPT.task;
+package novagpt.task;
 
 /**
  * Represents a generic task
@@ -10,6 +10,9 @@ public abstract class Task {
     private final String taskDescription;
     private boolean isDone;
 
+    /**
+     * Constructor to create task object
+     */
     public Task(String taskDescription) {
         this.taskDescription = taskDescription;
         isDone = false;

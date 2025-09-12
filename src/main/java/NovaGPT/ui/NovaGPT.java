@@ -1,13 +1,15 @@
-package NovaGPT.ui;
+package novagpt.ui;
 
-import NovaGPT.command.Command;
-import NovaGPT.command.Parser;
-import NovaGPT.command.TaskList;
-import NovaGPT.exception.NovaException;
-import NovaGPT.task.Task;
-import NovaGPT.storage.Storage;
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
+
+import novagpt.command.Command;
+import novagpt.command.Parser;
+import novagpt.command.TaskList;
+import novagpt.exception.NovaException;
+import novagpt.storage.Storage;
+import novagpt.task.Task;
+
 
 /**
  * The NovaGPT program implements a chatbot application that
@@ -17,30 +19,8 @@ import java.util.ArrayList;
  * @version 0.1
  * @since   2025-08-12
  */
-public class NovaGPT {
-    private static final String WELCOME_MESSAGE =
-            " _   _                  ____ ____ _____ \n" +
-            "| \\ | | _____   ____ _ / ___|  _ \\_   _| \n" +
-            "|  \\| |/ _ \\ \\ / / _` | |  _| |_) || |  \n" +
-            "| |\\  | (_) \\ V / (_| | |_| |  __/ | |   \n" +
-            "|_| \\_|\\___/ \\_/ \\__,_|\\____|_|    |_|\n" +
-            "\n" +
-            "Hello! What can I do for you today?";
-    private static final String GOODBYE_MESSAGE = "Bye. Hope to see you soon!\nHAND!";
-    private static final String KILL_SWITCH = "bye";
-    private static final String LIST_OF_COMMANDS =
-            """
-                    List of valid commands:\s
-                    todo <task name>\s
-                    deadline <task name> /by <deadline>\s
-                    event <task name> /from <start time> /to <end time>\s
-                    find <Task number>\s
-                    delete <Task number>\s
-                    mark <Task number>\s
-                    unmark <Task number>\s
-                    list\s
-                    Bye""";
 
+public class NovaGpt {
     /**
      * Starts the main program loop.
      * Continuously read for user input, parse the input into commands,
@@ -48,16 +28,15 @@ public class NovaGPT {
      * Continues until the exit command is released through the input "bye".
      *
      * @param filePath This is the filePath in which the application stores its list of tasks.
-     * @return Nothing.
      */
     public static void run(String filePath) {
-        Ui.print(WELCOME_MESSAGE);
+        Ui.welcomeMessage();
         String input = "";
         Scanner sc = new Scanner(System.in);
         Storage st = new Storage(filePath);
         ArrayList<Task> ls = st.load();
 
-        while (!input.toLowerCase().equals(KILL_SWITCH)) {
+        while (!input.toLowerCase().equals(Ui.KILL_SWITCH)) {
             input = sc.nextLine();
             Command command = Parser.parseCommandFromInput(input);
             try {
@@ -65,7 +44,7 @@ public class NovaGPT {
                 case BYE:
                     break;
                 case LIST:
-                    Ui.print(TaskList.handleList(ls));
+                    TaskList.handleList(ls);
                     break;
                 case MARK:
                     TaskList.handleMark(input, ls, st);
@@ -89,21 +68,23 @@ public class NovaGPT {
                     TaskList.handleFind(input, ls, st);
                     break;
                 case MAN:
-                    Ui.print(LIST_OF_COMMANDS);
+                    Ui.print(Ui.LIST_OF_COMMANDS);
                     break;
                 case UNKNOWN:
-                    throw new NovaException("Hold up! I'm sorry! \n" +
-                            "I don't get what that means, please try again :-( \n" +
-                            "Prompt 'man' for help"
+                    throw new NovaException("Hold up! I'm sorry! \n"
+                            + "I don't get what that means, please try again :-( \n"
+                            + "Prompt 'man' for help"
                             );
+                default:
+                    throw new NovaException("Error, try again");
                 }
             } catch (NovaException e) {
-                    Ui.print(e.getMessage());
+                Ui.errorMessage(e.getMessage());
             } catch (Exception e) {
-                    Ui.print("Unexpected error: " + e.getMessage());
+                Ui.unexpectedErrorMessage(e.getMessage());
             }
         }
-        Ui.print(GOODBYE_MESSAGE);
+        Ui.goodbyeMessage();
     }
 
     /**
@@ -111,6 +92,6 @@ public class NovaGPT {
      * @param args Unused.
      */
     public static void main(String[] args) {
-        NovaGPT.run("./data/NovaGPT.txt");
+        NovaGpt.run("./data/NovaGPT.txt");
     }
 }

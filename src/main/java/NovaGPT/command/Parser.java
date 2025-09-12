@@ -1,6 +1,6 @@
-package NovaGPT.command;
+package novagpt.command;
 
-import NovaGPT.exception.NovaException;
+import novagpt.exception.NovaException;
 
 /**
  * Represents a Parser class, entails all the parsing methods
@@ -18,17 +18,29 @@ public class Parser {
      */
     public static Command parseCommandFromInput(String input) {
         String lowerCaseInput = input.toLowerCase();
-        if (lowerCaseInput.equals(KILL_SWITCH)) return Command.BYE;
-        if (lowerCaseInput.equals("list")) return Command.LIST;
-        if (lowerCaseInput.startsWith("mark")) return Command.MARK;
-        if (lowerCaseInput.startsWith("unmark")) return Command.UNMARK;
-        if (lowerCaseInput.startsWith("todo")) return Command.TODO;
-        if (lowerCaseInput.startsWith("deadline")) return Command.DEADLINE;
-        if (lowerCaseInput.startsWith("event")) return Command.EVENT;
-        if (lowerCaseInput.startsWith("delete")) return Command.DELETE;
-        if (lowerCaseInput.startsWith("find")) return Command.FIND;
-        if (lowerCaseInput.startsWith("man")) return Command.MAN;
-        return Command.UNKNOWN;
+        if (lowerCaseInput.equals(KILL_SWITCH)) {
+            return Command.BYE;
+        } else if (lowerCaseInput.equals("list")) {
+            return Command.LIST;
+        } else if (lowerCaseInput.startsWith("mark")) {
+            return Command.MARK;
+        } else if (lowerCaseInput.startsWith("unmark")) {
+            return Command.UNMARK;
+        } else if (lowerCaseInput.startsWith("todo")) {
+            return Command.TODO;
+        } else if (lowerCaseInput.startsWith("deadline")) {
+            return Command.DEADLINE;
+        } else if (lowerCaseInput.startsWith("event")) {
+            return Command.EVENT;
+        } else if (lowerCaseInput.startsWith("delete")) {
+            return Command.DELETE;
+        } else if (lowerCaseInput.startsWith("find")) {
+            return Command.FIND;
+        } else if (lowerCaseInput.startsWith("man")) {
+            return Command.MAN;
+        } else {
+            return Command.UNKNOWN;
+        }
     }
 
     /**

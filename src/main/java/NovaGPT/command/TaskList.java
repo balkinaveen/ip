@@ -1,13 +1,14 @@
-package NovaGPT.command;
+package novagpt.command;
 
-import NovaGPT.task.Task;
-import NovaGPT.task.Todo;
-import NovaGPT.task.Deadline;
-import NovaGPT.task.Event;
-import NovaGPT.ui.Ui;
-import NovaGPT.storage.Storage;
-import NovaGPT.exception.NovaException;
 import java.util.ArrayList;
+
+import novagpt.exception.NovaException;
+import novagpt.storage.Storage;
+import novagpt.task.Deadline;
+import novagpt.task.Event;
+import novagpt.task.Task;
+import novagpt.task.Todo;
+import novagpt.ui.Ui;
 
 /**
  * Represents a TaskList, which contains the handlers for Task orientated commands
@@ -15,8 +16,6 @@ import java.util.ArrayList;
  * as well as methods to handle mark, unmark, delete and list commands
  */
 public class TaskList {
-    private static final String MARKED_MESSAGE = "Nice! I've marked this task as done:";
-    private static final String UNMARKED_MESSAGE = "OK, I've marked this task as not done yet:";
 
     /**
      * Handles Todo Tasks
@@ -29,20 +28,16 @@ public class TaskList {
      * @param ls ArrayList containing all saved tasks
      * @param st Storage object handling all storage related commands
      */
-    public static void handleTodoTask(String input, ArrayList<Task> ls, Storage st) {
+    public static void handleTodoTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         String text = input.substring(4).trim();
         if (text.isEmpty()) {
-            Ui.print("OOPS! The description of a todo cannot be empty. " +
-                    "\nDo format your input: todo <task>");
-            return;
+            throw new NovaException(Ui.EMPTY_ERROR_MESSAGE + Ui.FORMAT_MESSAGE + Ui.TODO_COMMAND_FORMAT);
         }
         Task t = new Todo(text);
         ls.add(t);
         st.save(ls);
-        Ui.print("Got it. I've added this task:\n"
-                + t.toString() + "\nNow you have "
-                + ls.size()
-                + " tasks in the list.");
+        Ui.taskMessage(t, ls);
+
     }
 
     /**
@@ -57,30 +52,21 @@ public class TaskList {
      * @param st Storage object handling all storage related commands
      * @throws NovaException If the input is invalid
      */
-    public static void handleDeadlineTask(String input, ArrayList<Task> ls, Storage st) throws NovaException{
+    public static void handleDeadlineTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         String text = input.substring(8).trim();
         if (text.isEmpty()) {
-            Ui.print("OOPS! The description of a deadline cannot be empty. " +
-                    "\nDo format your input: deadline <task> /by <deadline> DD/MM/YYYY HHMM (24 hour)");
-            return;
+            throw new NovaException(Ui.EMPTY_ERROR_MESSAGE + Ui.FORMAT_MESSAGE + Ui.DEADLINE_COMMAND_FORMAT);
         } else if (!input.contains("/by")) {
-            Ui.print("OOPS! The description of a deadline must contain /by. " +
-                    "\nDo format your input: deadline <task> /by <deadline> DD/MM/YYYY HHMM (24 hour)");
-            return;
+            throw new NovaException(Ui.FORMAT_MESSAGE + Ui.DEADLINE_COMMAND_FORMAT);
         }
         String[] split = text.split("/by", 2);
         if (split[0].trim().isEmpty()) {
-            Ui.print("OOPS! The description of a event cannot be empty. " +
-                    "\nDo format your input: deadline <task> /by <deadline> DD/MM/YYYY HHMM (24 hour)");
-            return;
+            throw new NovaException(Ui.EMPTY_ERROR_MESSAGE + Ui.FORMAT_MESSAGE + Ui.DEADLINE_COMMAND_FORMAT);
         }
-        Task t = new Deadline(split[0].trim(),split[1].trim());
+        Task t = new Deadline(split[0].trim(), split[1].trim());
         ls.add(t);
         st.save(ls);
-        Ui.print("Got it. I've added this task:\n"
-                + t.toString() + "\nNow you have "
-                + ls.size()
-                + " tasks in the list.");
+        Ui.taskMessage(t, ls);
     }
 
     /**
@@ -98,28 +84,20 @@ public class TaskList {
     public static void handleEventTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         String text = input.substring(5).trim();
         if (text.isEmpty()) {
-            Ui.print("OOPS! The description of a event cannot be empty. " +
-                    "\nDo format your input: event <task> /from <start> DD/MM/YYYY HHMM (24 hour) /to <end> DD/MM/YYYY HHMM (24 hour)");
-            return;
+            throw new NovaException(Ui.EMPTY_ERROR_MESSAGE + Ui.FORMAT_MESSAGE + Ui.EVENT_COMMAND_FORMAT);
         } else if (!input.contains("/from") || !input.contains("/to")) {
-            Ui.print("OOPS! The description of an event must contain /by. " +
-                    "\nDo format your input: event <task> /from <start> DD/MM/YYYY HHMM (24 hour) /to <end> DD/MM/YYYY HHMM (24 hour)");
-            return;
+            throw new NovaException(
+                    Ui.FORMAT_MESSAGE + Ui.EVENT_COMMAND_FORMAT);
         }
         String[] split1 = text.split("/from", 2);
         String[] split2 = split1[1].split("/to", 2);
         if (split1[0].trim().isEmpty()) {
-            Ui.print("OOPS! The description of an event cannot be empty. " +
-                    "\nDo format your input: event <task> /from <start> DD/MM/YYYY HHMM (24 hour) /to <end> DD/MM/YYYY HHMM (24 hour)");
-            return;
+            throw new NovaException(Ui.EMPTY_ERROR_MESSAGE + Ui.FORMAT_MESSAGE + Ui.EVENT_COMMAND_FORMAT);
         }
         Task t = new Event(split1[0].trim(), split2[0].trim(), split2[1].trim());
         ls.add(t);
         st.save(ls);
-        Ui.print("Got it. I've added this task:\n"
-                + t.toString() + "\nNow you have "
-                + ls.size()
-                + " tasks in the list.");
+        Ui.taskMessage(t, ls);
     }
 
     /**
@@ -134,15 +112,15 @@ public class TaskList {
      * @param st Storage object handling all storage related commands
      * @throws NovaException If the input is invalid
      */
-    public static void handleMark(String input, ArrayList<Task> ls, Storage st) throws NovaException{
+    public static void handleMark(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         int listNum = Parser.parseTaskIndex(input, "mark");
         if (listNum >= ls.size()) {
-            throw new NovaException("OOPS! Task number is out of range! Try again");
+            throw new NovaException(Ui.OUT_OF_INDEX);
         }
         Task t = ls.get(listNum);
         t.mark();
         st.save(ls);
-        Ui.print(MARKED_MESSAGE + "\n" + t.toString());
+        Ui.markMessage(t);
     }
 
     /**
@@ -160,12 +138,12 @@ public class TaskList {
     public static void handleUnMark(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         int listNum = Parser.parseTaskIndex(input, "unmark");
         if (listNum >= ls.size()) {
-            throw new NovaException("OOPS! Task number is out of range! Try again");
+            throw new NovaException(Ui.OUT_OF_INDEX);
         }
         Task t = ls.get(listNum);
         t.unMark();
         st.save(ls);
-        Ui.print(UNMARKED_MESSAGE + "\n" + t.toString());
+        Ui.unmarkMessage(t);
     }
 
     /**
@@ -174,21 +152,20 @@ public class TaskList {
      * Takes in an ArrayList
      * for each task in ArrayList, adds the details to an outout string
      * add returns the output string
-     *s
+     *
      * @param ls ArrayList containing all saved tasks
-     * @return A list of task in a set format
      */
-    public static String handleList(ArrayList<Task> ls) {
-        String output  = "";
+    public static void handleList(ArrayList<Task> ls) {
+        String output = "";
         int count = ls.size();
-        for(int j = 0; j < count; j++) {
+        for (int j = 0; j < count; j++) {
             if (j < count - 1) {
                 output += (j + 1) + ". " + ls.get(j).toString() + "\n";
             } else {
                 output += (j + 1) + ". " + ls.get(j).toString();
             }
         }
-        return output;
+        Ui.listMessage(output);
     }
 
     /**
@@ -206,14 +183,11 @@ public class TaskList {
     public static void handleDelete(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         int listNum = Parser.parseTaskIndex(input, "delete");
         if (listNum >= ls.size()) {
-            throw new NovaException("OOPS! Task number is out of range! Try again");
+            throw new NovaException(Ui.OUT_OF_INDEX);
         }
         Task removed = ls.remove(listNum);
         st.save(ls);
-        Ui.print("Noted. I've removed this task:\n"
-                + removed.toString() + "\nNow you have "
-                + ls.size()
-                + " tasks in the list.");
+        Ui.removeMessage(removed, ls);
     }
 
     /**
@@ -226,18 +200,16 @@ public class TaskList {
     public static void handleFind(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         String searchString = input.substring(4).trim();
         if (searchString.isEmpty()) {
-            Ui.print("OOPS! The description of find cannot be empty. " +
-                    "\nDo format your input: find <keyword(s) to search> ");
-            return;
+            throw new NovaException(Ui.EMPTY_ERROR_MESSAGE + Ui.FORMAT_MESSAGE + Ui.FIND_COMMAND_FORMAT);
         }
         String output = "";
-        int Counter = 1;
+        int counter = 1;
         for (int i = 0; i < ls.size(); i++) {
             Task task = ls.get(i);
-            if(task.getTaskDescription().contains(searchString)) {
-                output +=  "\n" + Counter + "." + task;
+            if (task.getTaskDescription().contains(searchString)) {
+                output += "\n" + counter + "." + task;
             }
         }
-        Ui.print("Here are the matching tasks in your list:" + output );
+        Ui.findMessage(output);
     }
 }

@@ -1,4 +1,4 @@
-package NovaGPT.command;
+package novagpt.command;
 
 /**
  * Represents the different commands that the chatbot supports

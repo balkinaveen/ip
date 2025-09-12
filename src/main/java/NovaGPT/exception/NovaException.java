@@ -1,6 +1,11 @@
-package NovaGPT.exception;
+package novagpt.exception;
 
-public class NovaException extends Exception{
+/**
+ * Represents an NovaException
+ * When thrown, the exception prints out an error message
+ * and suggestion on how to format the input
+ */
+public class NovaException extends Exception {
     public NovaException(String message) {
         super(message);
     }

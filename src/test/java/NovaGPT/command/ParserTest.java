@@ -1,12 +1,13 @@
-package NovaGPT.command;
-
-import NovaGPT.exception.NovaException;
-import org.junit.jupiter.api.Test;
+package novagpt.command;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
+import novagpt.exception.NovaException;
+
 
 public class ParserTest {
     @Test
@@ -54,8 +55,10 @@ public class ParserTest {
 
     @Test
     public void parseCommandFromInput_event_returnsEvent() {
-        assertEquals(Command.EVENT, Parser.parseCommandFromInput("event read book /from 05/11/2013 1900 /to 05/11/2013 1900"));
-        assertEquals(Command.EVENT, Parser.parseCommandFromInput("EVENT read book /from 05/11/2013 1900 /to 05/11/2013 1900"));
+        assertEquals(Command.EVENT, Parser.parseCommandFromInput("event read book /from 05/11/2013 1900 "
+                + "/to 05/11/2013 1900"));
+        assertEquals(Command.EVENT, Parser.parseCommandFromInput("EVENT read book /from 05/11/2013 1900 "
+                + "/to 05/11/2013 1900"));
     }
 
     @Test
@@ -72,26 +75,29 @@ public class ParserTest {
 
     @Test
     public void parseTaskIndex_validNumber_returnsIndexZeroBased() throws NovaException {
-        assertEquals(4,Parser.parseTaskIndex("mark 5", "mark"));
-        assertEquals(9,Parser.parseTaskIndex("delete 10", "delete"));
-        assertEquals(1,Parser.parseTaskIndex("unmark 2", "unmark"));
+        assertEquals(4, Parser.parseTaskIndex("mark 5", "mark"));
+        assertEquals(9, Parser.parseTaskIndex("delete 10", "delete"));
+        assertEquals(1, Parser.parseTaskIndex("unmark 2", "unmark"));
     }
 
     @Test
     public void parseTaskIndex_negativeNumber_throwsException() throws NovaException {
-        NovaException e = assertThrows(NovaException.class, () -> Parser.parseTaskIndex("mark -5", "mark"));
+        NovaException e = assertThrows(NovaException.class, () -> Parser.parseTaskIndex(
+                "mark -5", "mark"));
         assertTrue(e.getMessage().contains("must be positive"));
     }
 
     @Test
     public void parseTaskIndex_invalidInput_throwsException() throws NovaException {
-        NovaException e = assertThrows(NovaException.class, () -> Parser.parseTaskIndex("mark five", "mark"));
+        NovaException e = assertThrows(NovaException.class, () -> Parser.parseTaskIndex(
+                "mark five", "mark"));
         assertTrue(e.getMessage().contains("enter a valid number"));
     }
 
     @Test
     public void parseTaskIndex_emptyInput_throwsException() throws NovaException {
-        NovaException e = assertThrows(NovaException.class, () -> Parser.parseTaskIndex("mark  ", "mark"));
+        NovaException e = assertThrows(NovaException.class, () -> Parser.parseTaskIndex(
+                "mark  ", "mark"));
         assertTrue(e.getMessage().contains("enter a valid number"));
     }
 }

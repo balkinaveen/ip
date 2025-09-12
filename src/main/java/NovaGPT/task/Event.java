@@ -1,9 +1,10 @@
-package NovaGPT.task;
+package novagpt.task;
 
-import NovaGPT.exception.NovaException;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import novagpt.exception.NovaException;
 
 /**
  * Represents an Event task
@@ -12,29 +13,24 @@ import java.time.format.DateTimeFormatter;
  * Takes in a specific format of Date and Time and
  * outputs a set format of Date and Time
  */
-public class Event extends Task{
-    private LocalDateTime startTimeAndDate;
-    private LocalDateTime endTimeAndDate;
-    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.
-            ofPattern("dd/MM/yyyy HHmm");
-    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.
-            ofPattern("MMM dd yyyy, h:mma");
+public class Event extends Task {
+    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
+    private final LocalDateTime startTimeAndDate;
+    private final LocalDateTime endTimeAndDate;
 
-    public Event(String description, String startTimeAndDate, String endTimeAndDate) throws NovaException{
+    /**
+     * Constructor to create event object
+     */
+    public Event(String description, String startTimeAndDate, String endTimeAndDate) throws NovaException {
         super(description);
         try {
             this.startTimeAndDate = LocalDateTime.parse(startTimeAndDate, INPUT_FORMAT);
             this.endTimeAndDate = LocalDateTime.parse(endTimeAndDate, INPUT_FORMAT);
         } catch (DateTimeException e) {
-            throw new NovaException("OOPS! Wrong format, please key in date and time in DD/MM/YYYY HHMM " +
-                    "(24 hour) format");
+            throw new NovaException("OOPS! Wrong format, please key in date and time in DD/MM/YYYY HHMM "
+                    + "(24 hour) format");
         }
-    }
-
-    public Event(String description, LocalDateTime startTimeAndDate, LocalDateTime endTimeAndDate) {
-        super(description);
-        this.startTimeAndDate = startTimeAndDate;
-        this.endTimeAndDate = endTimeAndDate;
     }
 
     /**

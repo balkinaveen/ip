@@ -1,10 +1,10 @@
-package NovaGPT.task;
+package novagpt.task;
 
 /**
  * Represents an Todo task
  * Each task has a description and a completion status
  */
-public class Todo extends Task{
+public class Todo extends Task {
     public Todo(String description) {
         super(description);
     }
