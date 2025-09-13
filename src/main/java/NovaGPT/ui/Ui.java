@@ -36,31 +36,26 @@ public class Ui {
             + LIST_COMMAND_FORMAT;
 
     /**
-     * Prints a message with a line on top and at the bottom.
+     * Prints a message
      *
      * @param message the text to output to the user
      */
-    public static void print(String message) {
-        System.out.print(HORIZONTAL_LINE + "\n" + message + "\n" + HORIZONTAL_LINE + "\n");
+    public static String print(String message) {
+        return message;
     }
 
     /**
      * Prints a welcome message with NovaGPT logo.
      */
-    public static void welcomeMessage() {
-        print(" _   _                  ____ ____ _____ \n"
-                + "| \\ | | _____   ____ _ / ___|  _ \\_   _| \n"
-                + "|  \\| |/ _ \\ \\ / / _` | |  _| |_) || |  \n"
-                + "| |\\  | (_) \\ V / (_| | |_| |  __/ | |   \n"
-                + "|_| \\_|\\___/ \\_/ \\__,_|\\____|_|    |_|\n"
-                + "\n" + "Hello! What can I do for you today?");
+    public static String welcomeMessage() {
+        return print("Hello! \nHope you're having a nice day! \nWhat can I do for you today?");
     }
 
     /**
      * Prints a goodbye message
      */
-    public static void goodbyeMessage() {
-        print("Bye. Hope to see you soon!\nHAND!");
+    public static String goodbyeMessage() {
+        return print("Bye. Hope to see you soon!\nHAND!");
     }
 
     /**
@@ -69,8 +64,8 @@ public class Ui {
      * @param task the task that was added
      * @param ls is the list of tasks that was added
      */
-    public static void taskMessage(Task task, ArrayList<Task> ls) {
-        print("Got it. I've added this task:\n"
+    public static String taskMessage(Task task, ArrayList<Task> ls) {
+        return print("Got it. I've added this task:\n"
                 + task + "\nNow you have "
                 + ls.size()
                 + " tasks in the list.");
@@ -81,8 +76,8 @@ public class Ui {
      *
      * @param task the task that needs to be mark as done
      */
-    public static void markMessage(Task task) {
-        print("Nice! I've marked this task as done: \n"
+    public static String markMessage(Task task) {
+        return print("Nice! I've marked this task as done: \n"
                 + task);
     }
 
@@ -91,8 +86,8 @@ public class Ui {
      *
      * @param task the text to output to the user
      */
-    public static void unmarkMessage(Task task) {
-        print("OK, I've marked this task as not done yet: \n"
+    public static String unmarkMessage(Task task) {
+        return print("OK, I've marked this task as not done yet: \n"
                 + task);
     }
 
@@ -101,8 +96,8 @@ public class Ui {
      *
      * @param s is a string of tasks to print
      */
-    public static void listMessage(String s) {
-        print(s);
+    public static String listMessage(String s) {
+        return print(s);
     }
 
     /**
@@ -111,22 +106,22 @@ public class Ui {
      * @param removed is the task that was removed
      * @param ls is the list of current tasks after the removal
      */
-    public static void removeMessage(Task removed, ArrayList<Task> ls) {
-        print("Noted. I've removed this task:\n"
+    public static String removeMessage(Task removed, ArrayList<Task> ls) {
+        return print("Noted. I've removed this task:\n"
                 + removed.toString() + "\nNow you have "
                 + ls.size()
                 + " tasks in the list.");
     }
 
-    public static void findMessage(String s) {
-        print("Here are the matching tasks in your list:" + s);
+    public static String findMessage(String s) {
+        return print("Here are the matching tasks in your list:" + s);
     }
 
-    public static void errorMessage(String error) {
-        print(error);
+    public static String errorMessage(String error) {
+        return print(error);
     }
 
-    public static void unexpectedErrorMessage(String error) {
-        print("Unexpected error: " + error);
+    public static String unexpectedErrorMessage(String error) {
+        return print("Unexpected error: " + error);
     }
 }

@@ -28,7 +28,7 @@ public class TaskList {
      * @param ls ArrayList containing all saved tasks
      * @param st Storage object handling all storage related commands
      */
-    public static void handleTodoTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
+    public static String handleTodoTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         String text = input.substring(4).trim();
         if (text.isEmpty()) {
             throw new NovaException(Ui.EMPTY_ERROR_MESSAGE + Ui.FORMAT_MESSAGE + Ui.TODO_COMMAND_FORMAT);
@@ -36,7 +36,7 @@ public class TaskList {
         Task t = new Todo(text);
         ls.add(t);
         st.save(ls);
-        Ui.taskMessage(t, ls);
+        return Ui.taskMessage(t, ls);
 
     }
 
@@ -52,7 +52,7 @@ public class TaskList {
      * @param st Storage object handling all storage related commands
      * @throws NovaException If the input is invalid
      */
-    public static void handleDeadlineTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
+    public static String handleDeadlineTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         String text = input.substring(8).trim();
         if (text.isEmpty()) {
             throw new NovaException(Ui.EMPTY_ERROR_MESSAGE + Ui.FORMAT_MESSAGE + Ui.DEADLINE_COMMAND_FORMAT);
@@ -66,7 +66,7 @@ public class TaskList {
         Task t = new Deadline(split[0].trim(), split[1].trim());
         ls.add(t);
         st.save(ls);
-        Ui.taskMessage(t, ls);
+        return Ui.taskMessage(t, ls);
     }
 
     /**
@@ -81,7 +81,7 @@ public class TaskList {
      * @param st Storage object handling all storage related commands
      * @throws NovaException If the input is invalid
      */
-    public static void handleEventTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
+    public static String handleEventTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         String text = input.substring(5).trim();
         if (text.isEmpty()) {
             throw new NovaException(Ui.EMPTY_ERROR_MESSAGE + Ui.FORMAT_MESSAGE + Ui.EVENT_COMMAND_FORMAT);
@@ -97,7 +97,7 @@ public class TaskList {
         Task t = new Event(split1[0].trim(), split2[0].trim(), split2[1].trim());
         ls.add(t);
         st.save(ls);
-        Ui.taskMessage(t, ls);
+        return Ui.taskMessage(t, ls);
     }
 
     /**
@@ -112,7 +112,7 @@ public class TaskList {
      * @param st Storage object handling all storage related commands
      * @throws NovaException If the input is invalid
      */
-    public static void handleMark(String input, ArrayList<Task> ls, Storage st) throws NovaException {
+    public static String handleMark(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         int listNum = Parser.parseTaskIndex(input, "mark");
         if (listNum >= ls.size()) {
             throw new NovaException(Ui.OUT_OF_INDEX);
@@ -120,7 +120,7 @@ public class TaskList {
         Task t = ls.get(listNum);
         t.mark();
         st.save(ls);
-        Ui.markMessage(t);
+        return Ui.markMessage(t);
     }
 
     /**
@@ -135,7 +135,7 @@ public class TaskList {
      * @param st Storage object handling all storage related commands
      * @throws NovaException If the input is invalid
      */
-    public static void handleUnMark(String input, ArrayList<Task> ls, Storage st) throws NovaException {
+    public static String handleUnMark(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         int listNum = Parser.parseTaskIndex(input, "unmark");
         if (listNum >= ls.size()) {
             throw new NovaException(Ui.OUT_OF_INDEX);
@@ -143,7 +143,7 @@ public class TaskList {
         Task t = ls.get(listNum);
         t.unMark();
         st.save(ls);
-        Ui.unmarkMessage(t);
+        return Ui.unmarkMessage(t);
     }
 
     /**
@@ -155,7 +155,7 @@ public class TaskList {
      *
      * @param ls ArrayList containing all saved tasks
      */
-    public static void handleList(ArrayList<Task> ls) {
+    public static String handleList(ArrayList<Task> ls) {
         String output = "";
         int count = ls.size();
         for (int j = 0; j < count; j++) {
@@ -165,7 +165,7 @@ public class TaskList {
                 output += (j + 1) + ". " + ls.get(j).toString();
             }
         }
-        Ui.listMessage(output);
+        return Ui.listMessage(output);
     }
 
     /**
@@ -180,14 +180,14 @@ public class TaskList {
      * @param st Storage object handling all storage related commands
      * @throws NovaException If the input is invalid
      */
-    public static void handleDelete(String input, ArrayList<Task> ls, Storage st) throws NovaException {
+    public static String handleDelete(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         int listNum = Parser.parseTaskIndex(input, "delete");
         if (listNum >= ls.size()) {
             throw new NovaException(Ui.OUT_OF_INDEX);
         }
         Task removed = ls.remove(listNum);
         st.save(ls);
-        Ui.removeMessage(removed, ls);
+        return Ui.removeMessage(removed, ls);
     }
 
     /**
@@ -197,7 +197,7 @@ public class TaskList {
      * finds all tasks containing the search String and
      * prints a list
      */
-    public static void handleFind(String input, ArrayList<Task> ls, Storage st) throws NovaException {
+    public static String handleFind(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         String searchString = input.substring(4).trim();
         if (searchString.isEmpty()) {
             throw new NovaException(Ui.EMPTY_ERROR_MESSAGE + Ui.FORMAT_MESSAGE + Ui.FIND_COMMAND_FORMAT);
@@ -210,6 +210,6 @@ public class TaskList {
                 output += "\n" + counter + "." + task;
             }
         }
-        Ui.findMessage(output);
+        return Ui.findMessage(output);
     }
 }
