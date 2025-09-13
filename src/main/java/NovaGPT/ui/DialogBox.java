@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Circle;
 
 
 /**
@@ -34,9 +35,10 @@ public class DialogBox extends HBox {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        dialog.setText(text);
         displayPicture.setImage(img);
+        dialog.setText(text);
+        Circle clip = new Circle(17.5, 17.5, 17.5);
+        displayPicture.setClip(clip);
     }
 
     /**
@@ -46,7 +48,7 @@ public class DialogBox extends HBox {
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
-        setAlignment(Pos.TOP_LEFT);
+        setAlignment(Pos.BOTTOM_LEFT);
         dialog.getStyleClass().add("reply-label");
     }
 

@@ -36,7 +36,7 @@ public class Ui {
             + LIST_COMMAND_FORMAT;
 
     /**
-     * Prints a message with a line on top and at the bottom.
+     * Prints a message
      *
      * @param message the text to output to the user
      */
@@ -48,12 +48,7 @@ public class Ui {
      * Prints a welcome message with NovaGPT logo.
      */
     public static String welcomeMessage() {
-        return print(" _   _                  ____ ____ _____ \n"
-                + "| \\ | | _____   ____ _ / ___|  _ \\_   _| \n"
-                + "|  \\| |/ _ \\ \\ / / _` | |  _| |_) || |  \n"
-                + "| |\\  | (_) \\ V / (_| | |_| |  __/ | |   \n"
-                + "|_| \\_|\\___/ \\_/ \\__,_|\\____|_|    |_|\n"
-                + "\n" + "Hello! What can I do for you today?");
+        return print("Hello! \nHope you're having a nice day! \nWhat can I do for you today?");
     }
 
     /**
