@@ -14,6 +14,9 @@ import javafx.util.Duration;
  * Controller for the main GUI.
  */
 public class MainWindow extends AnchorPane {
+    private static final double EXIT_DELAY_SECONDS = 1.0;
+    private static final String USER_IMAGE = "/images/DaChatter.png";
+    private static final String NOVAGPT_IMAGE = "/images/DaNova.png";
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -26,15 +29,15 @@ public class MainWindow extends AnchorPane {
 
     private NovaGpt novagpt;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaChatter.png"));
-    private Image novagptImage = new Image(this.getClass().getResourceAsStream("/images/DaNova.png"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream(USER_IMAGE));
+    private Image novagptImage = new Image(this.getClass().getResourceAsStream(NOVAGPT_IMAGE));
 
 
     /** Initialises the ui */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
-        dialogContainer.getChildren().add(DialogBox.getDukeDialog(Ui.welcomeMessage(), novagptImage));
+        dialogContainer.getChildren().add(DialogBox.getNovagptDialog(Ui.welcomeMessage(), novagptImage));
     }
 
     /** Injects the NovaGPT instance */
@@ -44,8 +47,8 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
+     * Creates two dialog boxes, one echoing user input and the other containing NovaGPT's reply and
+     * then appends them to the dialog container. Clears the user input after processing.
      */
     @FXML
     private void handleUserInput() {
@@ -53,9 +56,9 @@ public class MainWindow extends AnchorPane {
         if (input.toLowerCase().equals("bye")) {
             dialogContainer.getChildren().addAll(
                     DialogBox.getUserDialog(input, userImage),
-                    DialogBox.getDukeDialog(Ui.goodbyeMessage(), novagptImage)
+                    DialogBox.getNovagptDialog(Ui.goodbyeMessage(), novagptImage)
             );
-            PauseTransition delay = new PauseTransition(Duration.seconds(1));
+            PauseTransition delay = new PauseTransition(Duration.seconds(EXIT_DELAY_SECONDS));
             delay.setOnFinished(event -> {
                 Stage stage = (Stage) userInput.getScene().getWindow();
                 stage.close();
@@ -65,13 +68,13 @@ public class MainWindow extends AnchorPane {
             String response = novagpt.response(input);
             dialogContainer.getChildren().addAll(
                     DialogBox.getUserDialog(input, userImage),
-                    DialogBox.getDukeDialog(response, novagptImage)
+                    DialogBox.getNovagptDialog(response, novagptImage)
             );
             userInput.clear();
         }
     }
 
-    String getUserInput() {
+    private String getUserInput() {
         return userInput.getText();
     }
 }

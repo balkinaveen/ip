@@ -136,7 +136,7 @@ public class TaskListTest {
         Task t = new Todo("read book");
         ls.add(t);
         TaskList.handleMark("mark 1", ls, st);
-        TaskList.handleUnMark("unmark 1", ls, st);
+        TaskList.handleUnmark("unmark 1", ls, st);
         assertFalse(t.getStatus());
     }
 
@@ -145,7 +145,7 @@ public class TaskListTest {
         Task t = new Todo("read book");
         ls.add(t);
         assertThrows(NovaException.class, (
-        ) -> TaskList.handleUnMark("unmark 2", ls, st));
+        ) -> TaskList.handleUnmark("unmark 2", ls, st));
     }
 
     @Test

@@ -21,6 +21,7 @@ import javafx.scene.shape.Circle;
  * and a label containing text from the speaker.
  */
 public class DialogBox extends HBox {
+    private static final double DISPLAY_PIC_RADIUS = 17.5;
     @FXML
     private Label dialog;
     @FXML
@@ -37,7 +38,7 @@ public class DialogBox extends HBox {
         }
         displayPicture.setImage(img);
         dialog.setText(text);
-        Circle clip = new Circle(17.5, 17.5, 17.5);
+        Circle clip = new Circle(DISPLAY_PIC_RADIUS, DISPLAY_PIC_RADIUS, DISPLAY_PIC_RADIUS);
         displayPicture.setClip(clip);
     }
 
@@ -56,7 +57,7 @@ public class DialogBox extends HBox {
         return new DialogBox(text, img);
     }
 
-    public static DialogBox getDukeDialog(String text, Image img) {
+    public static DialogBox getNovagptDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
         return db;

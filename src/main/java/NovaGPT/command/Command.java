@@ -1,7 +1,7 @@
 package novagpt.command;
 
 /**
- * Represents the different commands that the chatbot supports
+ * Represents the set of valid commands that the NovaGPT supports
  * This enum provides a fixed set of commands for the chatbot,
  * ensuring type safety while working with command-related operations
  */

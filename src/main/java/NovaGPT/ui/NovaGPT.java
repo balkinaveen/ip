@@ -21,6 +21,11 @@ import novagpt.task.Task;
 
 public class NovaGpt {
 
+    private static final String UNKNOWN_COMM_MESSAGE = """
+            Hold up! I'm sorry!
+            I don't get what that means, please try again :-(
+            Prompt 'man' for help""";
+    private static final String GENERIC_COMM_MESSAGE = "An unexpected error has occurred. Please try again!";
     private final Storage storage;
     private final ArrayList<Task> tasks;
     /**
@@ -34,44 +39,52 @@ public class NovaGpt {
     /**
      * Parses the input and gives the output
      * @param input is the input provided by user
+     * @return Response message (output) for the user
      */
     public String response(String input) {
         Command command = Parser.parseCommandFromInput(input);
         try {
-            switch (command) {
-            case BYE:
-                break;
-            case LIST:
-                return TaskList.handleList(tasks);
-            case MARK:
-                return TaskList.handleMark(input, tasks, storage);
-            case UNMARK:
-                return TaskList.handleUnMark(input, tasks, storage);
-            case TODO:
-                return TaskList.handleTodoTask(input, tasks, storage);
-            case DEADLINE:
-                return TaskList.handleDeadlineTask(input, tasks, storage);
-            case EVENT:
-                return TaskList.handleEventTask(input, tasks, storage);
-            case DELETE:
-                return TaskList.handleDelete(input, tasks, storage);
-            case FIND:
-                return TaskList.handleFind(input, tasks, storage);
-            case MAN:
-                return Ui.print(Ui.LIST_OF_COMMANDS);
-            case UNKNOWN:
-                throw new NovaException("Hold up! I'm sorry! \n"
-                        + "I don't get what that means, please try again :-( \n"
-                        + "Prompt 'man' for help"
-                        );
-            default:
-                throw new NovaException("Error, try again");
-            }
+            return handleCommand(command, input);
         } catch (NovaException e) {
             return Ui.errorMessage(e.getMessage());
         } catch (Exception e) {
             return Ui.unexpectedErrorMessage(e.getMessage());
         }
-        return null;
+    }
+    /**
+     * Handles the given command and returns the appropriate response
+     * @param command Parsed command type
+     * @param input is the input provided by user
+     * @return Response message (output) for the user
+     * @throws NovaException if an invalid command is given
+     */
+    public String handleCommand(Command command, String input) throws NovaException {
+        switch (command) {
+        case BYE:
+            break;
+        case LIST:
+            return TaskList.handleList(tasks);
+        case MARK:
+            return TaskList.handleMark(input, tasks, storage);
+        case UNMARK:
+            return TaskList.handleUnmark(input, tasks, storage);
+        case TODO:
+            return TaskList.handleTodoTask(input, tasks, storage);
+        case DEADLINE:
+            return TaskList.handleDeadlineTask(input, tasks, storage);
+        case EVENT:
+            return TaskList.handleEventTask(input, tasks, storage);
+        case DELETE:
+            return TaskList.handleDelete(input, tasks, storage);
+        case FIND:
+            return TaskList.handleFind(input, tasks);
+        case MAN:
+            return Ui.LIST_OF_COMMANDS;
+        case UNKNOWN:
+            throw new NovaException(UNKNOWN_COMM_MESSAGE);
+        default:
+            throw new NovaException(GENERIC_COMM_MESSAGE);
+        }
+        throw new NovaException(GENERIC_COMM_MESSAGE);
     }
 }
