@@ -29,7 +29,7 @@ public class TaskList {
      * @param st Storage object handling all storage related commands
      */
     public static String handleTodoTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
-        String text = input.substring(4).trim();
+        String text = input.substring("todo".length()).trim();
         if (text.isEmpty()) {
             throw new NovaException(Ui.EMPTY_ERROR_MESSAGE + Ui.FORMAT_MESSAGE + Ui.TODO_COMMAND_FORMAT);
         }
@@ -53,7 +53,7 @@ public class TaskList {
      * @throws NovaException If the input is invalid
      */
     public static String handleDeadlineTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
-        String text = input.substring(8).trim();
+        String text = input.substring("deadline".length()).trim();
         if (text.isEmpty()) {
             throw new NovaException(Ui.EMPTY_ERROR_MESSAGE + Ui.FORMAT_MESSAGE + Ui.DEADLINE_COMMAND_FORMAT);
         } else if (!input.contains("/by")) {
@@ -82,7 +82,7 @@ public class TaskList {
      * @throws NovaException If the input is invalid
      */
     public static String handleEventTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
-        String text = input.substring(5).trim();
+        String text = input.substring("event".length()).trim();
         if (text.isEmpty()) {
             throw new NovaException(Ui.EMPTY_ERROR_MESSAGE + Ui.FORMAT_MESSAGE + Ui.EVENT_COMMAND_FORMAT);
         } else if (!input.contains("/from") || !input.contains("/to")) {
@@ -135,13 +135,13 @@ public class TaskList {
      * @param st Storage object handling all storage related commands
      * @throws NovaException If the input is invalid
      */
-    public static String handleUnMark(String input, ArrayList<Task> ls, Storage st) throws NovaException {
+    public static String handleUnmark(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         int listNum = Parser.parseTaskIndex(input, "unmark");
         if (listNum >= ls.size()) {
             throw new NovaException(Ui.OUT_OF_INDEX);
         }
         Task t = ls.get(listNum);
-        t.unMark();
+        t.unmark();
         st.save(ls);
         return Ui.unmarkMessage(t);
     }
@@ -197,7 +197,7 @@ public class TaskList {
      * finds all tasks containing the search String and
      * prints a list
      */
-    public static String handleFind(String input, ArrayList<Task> ls, Storage st) throws NovaException {
+    public static String handleFind(String input, ArrayList<Task> ls) throws NovaException {
         String searchString = input.substring(4).trim();
         if (searchString.isEmpty()) {
             throw new NovaException(Ui.EMPTY_ERROR_MESSAGE + Ui.FORMAT_MESSAGE + Ui.FIND_COMMAND_FORMAT);
@@ -208,6 +208,7 @@ public class TaskList {
             Task task = ls.get(i);
             if (task.getTaskDescription().contains(searchString)) {
                 output += "\n" + counter + "." + task;
+                counter++;
             }
         }
         return Ui.findMessage(output);

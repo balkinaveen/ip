@@ -10,8 +10,8 @@ import novagpt.task.Task;
  */
 public class Ui {
 
-    public static final String HORIZONTAL_LINE = "____________________________________________________________";
     public static final String KILL_SWITCH = "bye";
+
     public static final String TODO_COMMAND_FORMAT = "todo <task name>";
     public static final String DEADLINE_COMMAND_FORMAT = "deadline <task name> /by <deadline> "
             + "DD/MM/YYYY HHMM (24 hour)";
@@ -22,6 +22,7 @@ public class Ui {
     public static final String MARK_COMMAND_FORMAT = "mark <Task number>";
     public static final String UNMARK_COMMAND_FORMAT = "unmark <Task number>";
     public static final String LIST_COMMAND_FORMAT = "list";
+
     public static final String EMPTY_ERROR_MESSAGE = "OOPS! The description of a task cannot be empty. \n";
     public static final String FORMAT_MESSAGE = "Do format the message: ";
     public static final String OUT_OF_INDEX = "OOPS! Task number is out of range! Try again";
@@ -35,27 +36,19 @@ public class Ui {
             + UNMARK_COMMAND_FORMAT + "\n"
             + LIST_COMMAND_FORMAT;
 
-    /**
-     * Prints a message
-     *
-     * @param message the text to output to the user
-     */
-    public static String print(String message) {
-        return message;
-    }
 
     /**
      * Prints a welcome message with NovaGPT logo.
      */
     public static String welcomeMessage() {
-        return print("Hello! \nHope you're having a nice day! \nWhat can I do for you today?");
+        return "Hello! \nHope you're having a nice day! \nWhat can I do for you today?";
     }
 
     /**
      * Prints a goodbye message
      */
     public static String goodbyeMessage() {
-        return print("Bye. Hope to see you soon!\nHAND!");
+        return "Bye. Hope to see you soon!\nHAND!";
     }
 
     /**
@@ -65,10 +58,10 @@ public class Ui {
      * @param ls is the list of tasks that was added
      */
     public static String taskMessage(Task task, ArrayList<Task> ls) {
-        return print("Got it. I've added this task:\n"
+        return "Got it. I've added this task:\n"
                 + task + "\nNow you have "
                 + ls.size()
-                + " tasks in the list.");
+                + " tasks in the list.";
     }
 
     /**
@@ -77,8 +70,8 @@ public class Ui {
      * @param task the task that needs to be mark as done
      */
     public static String markMessage(Task task) {
-        return print("Nice! I've marked this task as done: \n"
-                + task);
+        return "Nice! I've marked this task as done: \n"
+                + task;
     }
 
     /**
@@ -87,17 +80,17 @@ public class Ui {
      * @param task the text to output to the user
      */
     public static String unmarkMessage(Task task) {
-        return print("OK, I've marked this task as not done yet: \n"
-                + task);
+        return "OK, I've marked this task as not done yet: \n"
+                + task;
     }
 
     /**
      * Prints a list of tasks
      *
-     * @param s is a string of tasks to print
+     * @param tasksAsString is a string of tasks to print
      */
-    public static String listMessage(String s) {
-        return print(s);
+    public static String listMessage(String tasksAsString) {
+        return tasksAsString;
     }
 
     /**
@@ -107,21 +100,21 @@ public class Ui {
      * @param ls is the list of current tasks after the removal
      */
     public static String removeMessage(Task removed, ArrayList<Task> ls) {
-        return print("Noted. I've removed this task:\n"
+        return "Noted. I've removed this task:\n"
                 + removed.toString() + "\nNow you have "
                 + ls.size()
-                + " tasks in the list.");
+                + " tasks in the list.";
     }
 
     public static String findMessage(String s) {
-        return print("Here are the matching tasks in your list:" + s);
+        return "Here are the matching tasks in your list:" + s;
     }
 
     public static String errorMessage(String error) {
-        return print(error);
+        return error;
     }
 
     public static String unexpectedErrorMessage(String error) {
-        return print("Unexpected error: " + error);
+        return "Unexpected error: " + error;
     }
 }

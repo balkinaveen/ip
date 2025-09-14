@@ -15,18 +15,22 @@ import novagpt.exception.NovaException;
 public class Deadline extends Task {
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
-    private final LocalDateTime endTimeAndDate;
+    private final LocalDateTime endTimeDate;
 
     /**
-     * Constructor to create deadline object
+     * Constructs a deadline object with the given description and end date and time
+     * @param description of the deadline
+     * @param deadline End date-time in string
+     * @throws NovaException if either date or time does not follow the expected format
      */
     public Deadline(String description, String deadline) throws NovaException {
         super(description);
         try {
-            this.endTimeAndDate = LocalDateTime.parse(deadline, INPUT_FORMAT);
+            this.endTimeDate = LocalDateTime.parse(deadline, INPUT_FORMAT);
         } catch (DateTimeException e) {
-            throw new NovaException("OOPS! Wrong format, please key in date and time in DD/MM/YYYY HHMM "
-                    + "(24 hour) format");
+            throw new NovaException("OOPS! Wrong format, please key in date and time in "
+                    + INPUT_FORMAT
+                    + " (24 hour) format");
         }
     }
 
@@ -34,7 +38,7 @@ public class Deadline extends Task {
      * Returns the end time and date
      */
     public LocalDateTime getEndTimeAndDate() {
-        return this.endTimeAndDate;
+        return this.endTimeDate;
     }
 
     @Override
@@ -42,7 +46,7 @@ public class Deadline extends Task {
         return "[D]"
                 + super.toString()
                 + " (by: "
-                + endTimeAndDate.format(OUTPUT_FORMAT)
+                + endTimeDate.format(OUTPUT_FORMAT)
                 + ")";
     }
 }

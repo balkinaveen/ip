@@ -9,21 +9,25 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * A GUI for Duke using FXML.
+ * A GUI for NovaGPT using FXML.
  */
 public class Main extends Application {
+
+    private static final double MIN_HEIGHT = 220;
+    private static final double MIN_WIDTH = 417;
+    private static final String STORAGE_PATH = "./data/NovaGPT.txt";
 
     @Override
     public void start(Stage stage) {
         try {
-            stage.setMinHeight(220);
-            stage.setMinWidth(417);
+            stage.setMinHeight(MIN_HEIGHT);
+            stage.setMinWidth(MIN_WIDTH);
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
 
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            NovaGpt novagpt = new NovaGpt("./data/NovaGPT.txt");
+            NovaGpt novagpt = new NovaGpt(STORAGE_PATH);
             fxmlLoader.<MainWindow>getController().setNovagpt(novagpt);
             stage.show();
         } catch (IOException e) {

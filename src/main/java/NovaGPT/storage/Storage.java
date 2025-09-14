@@ -15,36 +15,29 @@ import novagpt.task.Todo;
 
 
 /**
- * Represents a Storage class, which reads and writes from a txt file
- * This class contains methods to load and save tasks
+ * Handles saving and loading tasks from a text file
  */
 public class Storage {
     private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
     private final Path filePath;
 
+    /**
+     * Constructs a Storage object with the given file path
+     * @param filepath to the file used for saving and loading of tasks
+     */
     public Storage(String filepath) {
         this.filePath = Paths.get(filepath);
     }
 
     /**
-     * Returns an empty ArrayList if file not in directory
-     * and an ArrayList containing Tasks if file is in directory
-     * Checks if the directory and file exists
-     * creates the directory and file if required
-     * initialise an empty ArrayList
-     * loads the tasks from the specified file into the ArrayList
-     * returns the ArrayList
+     * Loads tasks from the storage file
+     * Creates the file or parent directories if they do not exist
+     * @return the ArrayList
      */
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
         try {
-            Path parent = filePath.getParent();
-            if (parent != null) {
-                Files.createDirectories(parent);
-            }
-            if (!Files.exists(filePath)) {
-                Files.createFile(filePath);
-            }
+            ensureFileDirectoriesExists();
             List<String> lines = Files.readAllLines(filePath);
             for (String line : lines) {
                 Task t = parseLine(line);
@@ -58,11 +51,20 @@ public class Storage {
         }
         return tasks;
     }
+    private void ensureFileDirectoriesExists() throws IOException {
+        Path parent = filePath.getParent();
+        if (parent != null) {
+            Files.createDirectories(parent);
+        }
+        if (!Files.exists(filePath)) {
+            Files.createFile(filePath);
+        }
+    }
 
     /**
-     * Returns Task
-     * helper method that parses each line and re-creates
-     * the respective tasks with its details
+     * Parses a line of text and reconstructs the corresponds tasks
+     * @param line from the storage file
+     * @return reconstructed task or null if the line is invalid
      */
     public Task parseLine(String line) {
         try {
@@ -70,22 +72,28 @@ public class Storage {
             for (int i = 0; i < details.length; i++) {
                 details[i] = details[i].trim();
             }
-            String typeTask = details[0];
+            String taskType = details[0].toUpperCase();
             boolean isDone = details[1].equals("1");
-            Task t = null;
+            Task task = null;
 
-            if (details[0].toUpperCase().equals("T")) {
-                t = new Todo(details[2]);
-            } else if (details[0].toUpperCase().equals("D")) {
-                t = new Deadline(details[2], details[3]);
-            } else if (details[0].toUpperCase().equals("E")) {
-                t = new Event(details[2], details[3], details[4]);
+            switch (taskType) {
+            case "T":
+                task = new Todo(details[2]);
+                break;
+            case "D":
+                task = new Deadline(details[2], details[3]);
+                break;
+            case "E":
+                task = new Event(details[2], details[3], details[4]);
+                break;
+            default:
+                return null;
             }
 
-            if (t != null && isDone) {
-                t.mark();
+            if (task != null && isDone) {
+                task.mark();
             }
-            return t;
+            return task;
 
         } catch (Exception e) {
             return null;
@@ -93,31 +101,29 @@ public class Storage {
     }
 
     /**
-     * Saves tasks into specified file
-     * for each task in list, it saves its details as a String in a pre-determined format
-     * and writes it to the file specified.
+     * Saves tasks into specified text file
+     * @param tasks list of tasks to save
      */
     public void save(ArrayList<Task> tasks) {
         try {
             List<String> lines = new ArrayList<>();
-            for (int i = 0; i < tasks.size(); i++) {
-                String line = "";
-                Task t = tasks.get(i);
-                String status = t.getStatus() ? "1" : "0";
-                if (t instanceof Todo) {
+            for (Task task : tasks) {
+                String line;
+                String status = task.getStatus() ? "1" : "0";
+                if (task instanceof Todo) {
                     line = String.join(" | ", "T",
                             status,
-                            t.getTaskDescription());
-                } else if (t instanceof Deadline) {
+                            task.getTaskDescription());
+                } else if (task instanceof Deadline) {
                     line = String.join(" | ", "D",
                             status,
-                            t.getTaskDescription(), ((Deadline) t).getEndTimeAndDate().format(FORMAT));
-                } else if (t instanceof Event) {
+                            task.getTaskDescription(), ((Deadline) task).getEndTimeAndDate().format(FORMAT));
+                } else if (task instanceof Event) {
                     line = String.join(" | ", "E",
                             status,
-                            t.getTaskDescription(), (
-                                    (Event) t).getStartTimeAndDate().format(FORMAT), (
-                                            (Event) t).getEndTimeAndDate().format(FORMAT));
+                            task.getTaskDescription(), (
+                                    (Event) task).getStartTimeAndDate().format(FORMAT), (
+                                    (Event) task).getEndTimeAndDate().format(FORMAT));
                 } else {
                     continue;
                 }

@@ -44,13 +44,13 @@ public class Parser {
     }
 
     /**
-     * Returns the specified item as a zero-indexed integer
-     * If the input is not valid, throws an error
+     * Parses the task index from a command input string
+     * The index returned is zero-indexed.
      *
-     * @param input The input string that the user provides
-     * @param command The command string tied to the user input
-     * @return Zero-indexed integer
-     * @throws NovaException if input is invalid
+     * @param input string that the user provides
+     * @param command command keyword tied to the user input
+     * @return Zero-indexed task index
+     * @throws NovaException if input does not contain a valid number
      */
     public static int parseTaskIndex(String input, String command) throws NovaException {
         try {

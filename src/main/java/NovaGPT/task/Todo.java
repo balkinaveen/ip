@@ -2,9 +2,13 @@ package novagpt.task;
 
 /**
  * Represents an Todo task
- * Each task has a description and a completion status
+ * A todo has only description and a completion status
  */
 public class Todo extends Task {
+    /**
+     * Constructs a  Todo with the given description.
+     * @param description of the todo task
+     */
     public Todo(String description) {
         super(description);
     }

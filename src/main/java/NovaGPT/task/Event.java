@@ -16,20 +16,25 @@ import novagpt.exception.NovaException;
 public class Event extends Task {
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
-    private final LocalDateTime startTimeAndDate;
-    private final LocalDateTime endTimeAndDate;
+    private final LocalDateTime startTimeDate;
+    private final LocalDateTime endTimeDate;
 
     /**
-     * Constructor to create event object
+     * Constructs an event object with the given description and start/end date and time
+     * @param description of the event
+     * @param startTimeDate Start date-time in string
+     * @param endTimeDate End date-time in string
+     * @throws NovaException if either date or time does not follow the expected format
      */
-    public Event(String description, String startTimeAndDate, String endTimeAndDate) throws NovaException {
+    public Event(String description, String startTimeDate, String endTimeDate) throws NovaException {
         super(description);
         try {
-            this.startTimeAndDate = LocalDateTime.parse(startTimeAndDate, INPUT_FORMAT);
-            this.endTimeAndDate = LocalDateTime.parse(endTimeAndDate, INPUT_FORMAT);
+            this.startTimeDate = LocalDateTime.parse(startTimeDate, INPUT_FORMAT);
+            this.endTimeDate = LocalDateTime.parse(endTimeDate, INPUT_FORMAT);
         } catch (DateTimeException e) {
-            throw new NovaException("OOPS! Wrong format, please key in date and time in DD/MM/YYYY HHMM "
-                    + "(24 hour) format");
+            throw new NovaException("OOPS! Wrong format, please key in date and time in "
+                    + INPUT_FORMAT
+                    + " (24 hour) format");
         }
     }
 
@@ -37,14 +42,14 @@ public class Event extends Task {
      * Gets the start time and date
      */
     public LocalDateTime getStartTimeAndDate() {
-        return this.startTimeAndDate;
+        return this.startTimeDate;
     }
 
     /**
      * Gets the end time and date
      */
     public LocalDateTime getEndTimeAndDate() {
-        return this.endTimeAndDate;
+        return this.endTimeDate;
     }
 
     @Override
@@ -52,9 +57,9 @@ public class Event extends Task {
         return "[E]"
                 + super.toString()
                 + " (from: "
-                + this.startTimeAndDate.format(OUTPUT_FORMAT)
+                + this.startTimeDate.format(OUTPUT_FORMAT)
                 + " to: "
-                + this.endTimeAndDate.format(OUTPUT_FORMAT)
+                + this.endTimeDate.format(OUTPUT_FORMAT)
                 + ")";
     }
 }
