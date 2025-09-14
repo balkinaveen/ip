@@ -21,7 +21,7 @@ Hope you're having a nice day!
 What can I do for you today?
 ```
 ## Adding Todos
-Adds a simple task without any date/time.
+Adds a simple task without any date/time <br>
 **Format:**
 ```
 todo <task description>
@@ -37,7 +37,7 @@ Got it. I've added this task:
 Now you have 1 tasks in the list.
 ```
 ## Adding Deadlines
-Adds a task with a deadline.
+Adds a task with a deadline <br>
 **Format:**
 ```
 deadline <task description> /by <DD/MM/YYYY HHMM>
@@ -53,7 +53,7 @@ Got it. I've added this task:
 Now you have 2 tasks in the list.
 ```
 ## Adding Events
-Adds a task with a start and end time.
+Adds a task with a start and end time <br>
 **Format:**
 ```
 event <task description> /from <DD/MM/YYYY HHMM> /to <DD/MM/YYYY HHMM>
@@ -69,7 +69,7 @@ Got it. I've added this task:
 Now you have 3 tasks in the list.
 ```
 ## Marking and Unmarking Tasks
-Marks or unmarks a task as done.
+Marks or unmarks a task as done <br>
 **Format:**
 ```
 mark <task number>
@@ -94,7 +94,7 @@ OK, I've marked this task as not done yet:
 [T][ ] read book
 ```
 ## Deleting Tasks
-Deletes a task from the list
+Deletes a task from the list <br>
 **Format:**
 ```
 delete <task number>
@@ -110,7 +110,7 @@ Noted. I've removed this task as done:
 Now you have 2 tasks in the list.
 ```
 ## Listing All Tasks
-Shows all tasks in your list
+Shows all tasks in your list <br>
 **Format:**
 ```
 list
@@ -125,7 +125,7 @@ list
 2. [E][ ] CS 2103T project meeting (from: Sep 15 2025, 3:00pm to: Sep 15 2025, 5:00pm)
 ```
 ## Listing All Tasks
-Finds tasks containing a keyword
+Finds tasks containing a keyword <br>
 **Format:**
 ```
 find <keyword>
@@ -140,7 +140,7 @@ Here are the matching tasks in your list:
 1. [T][ ] read book
 ```
 ## Reminder
-Shows upcoming deadlines and events with the next user specified days
+Shows upcoming deadlines and events with the next user specified days <br>
 **Format:**
 ```
 reminder <number of days>
@@ -155,7 +155,7 @@ Here are your upcoming tasks within the next 2 days
 1. [E][ ] CS 2103T project meeting (from: Sep 15 2025, 3:00pm to: Sep 15 2025, 5:00pm)
 ```
 ## Exiting the App
-Exits the app
+Exits the app <br>
 **Format:**
 ```
 bye
