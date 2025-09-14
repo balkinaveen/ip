@@ -23,7 +23,6 @@ public class NovaGpt {
 
     private final Storage storage;
     private final ArrayList<Task> tasks;
-
     /**
      * Initializes a chatbot instance
      * @param filePath is where the file is stored
