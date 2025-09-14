@@ -20,7 +20,7 @@ Hello!
 Hope you're having a nice day!
 What can I do for you today?
 ```
-## Adding Todos
+## 📚 Adding Todos
 Adds a simple task without any date/time <br>
 **Format:**
 ```
@@ -36,7 +36,7 @@ Got it. I've added this task:
 [T][ ] read book
 Now you have 1 tasks in the list.
 ```
-## Adding Deadlines
+## ⏰ Adding Deadlines
 Adds a task with a deadline <br>
 **Format:**
 ```
@@ -52,7 +52,7 @@ Got it. I've added this task:
 [D][ ] submit report (by: Sep 15 2025, 11:59pm)
 Now you have 2 tasks in the list.
 ```
-## Adding Events
+## 📅 Adding Events
 Adds a task with a start and end time <br>
 **Format:**
 ```
@@ -68,7 +68,7 @@ Got it. I've added this task:
 [E][ ] submit report (from: Sep 15 2025, 03:00pm to: Sep 15 2025, 05:00pm)
 Now you have 3 tasks in the list.
 ```
-## Marking and Unmarking Tasks
+## ✅ Marking and ❎ Unmarking Tasks
 Marks or unmarks a task as done <br>
 **Format:**
 ```
@@ -93,7 +93,7 @@ unmark 1
 OK, I've marked this task as not done yet:
 [T][ ] read book
 ```
-## Deleting Tasks
+## 🗑️ Deleting Tasks
 Deletes a task from the list <br>
 **Format:**
 ```
@@ -105,11 +105,11 @@ delete 2
 ```
 **Expected output:**
 ```
-Noted. I've removed this task as done:
+Noted. I've removed this task:
 [D][ ] submit report (by: Sep 15 2025, 11:59pm)
 Now you have 2 tasks in the list.
 ```
-## Listing All Tasks
+## 📋 Listing All Tasks
 Shows all tasks in your list <br>
 **Format:**
 ```
@@ -124,7 +124,7 @@ list
 1. [T][ ] read book
 2. [E][ ] CS 2103T project meeting (from: Sep 15 2025, 3:00pm to: Sep 15 2025, 5:00pm)
 ```
-## Listing All Tasks
+## 🔍 Finding All Tasks
 Finds tasks containing a keyword <br>
 **Format:**
 ```
@@ -139,7 +139,7 @@ find book
 Here are the matching tasks in your list:
 1. [T][ ] read book
 ```
-## Reminder
+## 🔔 Reminder
 Shows upcoming deadlines and events with the next user specified days <br>
 **Format:**
 ```
@@ -154,7 +154,7 @@ reminder 2
 Here are your upcoming tasks within the next 2 days
 1. [E][ ] CS 2103T project meeting (from: Sep 15 2025, 3:00pm to: Sep 15 2025, 5:00pm)
 ```
-## Exiting the App
+## 🚪 Exiting the App
 Exits the app <br>
 **Format:**
 ```
