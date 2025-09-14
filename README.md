@@ -1,26 +1,51 @@
-# Duke project template
+# NovaGPT Chatbot
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+NovaGPT is a task management chatbot with a simple GUI built using JavaFX. It helps users manage various type of tasks, track completion, search by keyword and get reminders for upcoming tasks.
 
-## Setting up in Intellij
+This project was iteratively developed based on a greenfield Java project named Duke as part of **CS2103T: Software Engineering** at National University of Singapore. Given below are instructions on how to use it.
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+## Features of the Chatbot
+- **Task Management**
+  - Add Todo, Deadline and Event Tasks
+  - List (List all stored Tasks)
+  - Mark/Unmark tasks as done
+  - Delete tasks
+- **Search**
+  - Find tasks by keyword
+- **Reminders**
+  - Get notified about tasks due in the next specified number of days
+- **Save**
+  - Taks are automatically saved to a file and loaded on startup
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
+## Getting started
+Prerequisites: JDK 17
+
+1. Download the latest novagpt.jar file from [here](https://github.com/balkinaveen/ip/releases/).<br>
+2. Open a terminal in the folder where the jar is located.
+3. Run:
    ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
+   java -jar novagpt.jar
    ```
+## Usage of the Chatbot
+When NovaGPT starts, you'll see:
+<p align="left">
+<img width="591" height="740" alt="image" src="https://github.com/user-attachments/assets/6aad8d0b-5833-46f5-a187-96fce372cd9b" />
+</p>
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+### Example Commands
+`todo read book` → Adds a todo task to the list <br>
+`deadline submit report /by 15/09/2025 2359` → Adds a deadline to the list <br>
+`event CS 2103T project meeting /from 15/09/2025 1500 /to 15/09/2025 1700` → Adds an event to the list <br>
+`list` → Lists all tasks <br>
+`mark 1` → Marks task 1 in the list as done <br>
+`unmark 2` → Unmarks task 2 <br>
+`delete 3` → Deletes task 3 <br>
+`find report` → Finds task containing "report" <br>
+`reminder 5` → Shows upcomcing tasks within the next 5 days <br>
+`man` → Shows the list of supported prompts
+`bye` → Exits the program <br>
+
+## Data Storage
+- Tasks are stored in a text file under the `./data` directory
+- On startup, NovaGPT automatically loads tasks from this file
+- If the file and directories does not exist, a new one is created.
