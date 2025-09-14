@@ -126,6 +126,7 @@ list
 list
 ```
 **Expected output:**
+
 ```
 1. [T][ ] read book
 2. [E][ ] CS 2103T project meeting (from: Sep 15 2025, 3:00pm to: Sep 15 2025, 5:00pm)
