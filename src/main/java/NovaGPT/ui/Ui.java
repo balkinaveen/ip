@@ -22,6 +22,7 @@ public class Ui {
     public static final String MARK_COMMAND_FORMAT = "mark <Task number>";
     public static final String UNMARK_COMMAND_FORMAT = "unmark <Task number>";
     public static final String LIST_COMMAND_FORMAT = "list";
+    public static final String REMINDER_COMMAND_FORMAT = "reminder <number of days to remind within>";
 
     public static final String EMPTY_ERROR_MESSAGE = "OOPS! The description of a task cannot be empty. \n";
     public static final String FORMAT_MESSAGE = "Do format the message: ";
@@ -90,7 +91,10 @@ public class Ui {
      * @param tasksAsString is a string of tasks to print
      */
     public static String listMessage(String tasksAsString) {
-        return tasksAsString;
+        if (tasksAsString.isEmpty()) {
+            return "No tasks in your list currently! Let's start adding tasks!";
+        }
+        return "Here is a list of your tasks \n" + tasksAsString;
     }
 
     /**
@@ -116,5 +120,18 @@ public class Ui {
 
     public static String unexpectedErrorMessage(String error) {
         return "Unexpected error: " + error;
+    }
+
+    /**
+     * Prints a list of tasks
+     *
+     * @param days number of days to set the reminder for
+     * @param reminderAsString is a string of tasks to print
+     */
+    public static String reminderMessage(int days, String reminderAsString) {
+        if (reminderAsString.isEmpty()) {
+            return "No upcoming deadlines or events within the next " + days + " days";
+        }
+        return "Here are your upcoming tasks within the next " + days + " days" + reminderAsString;
     }
 }

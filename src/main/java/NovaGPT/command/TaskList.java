@@ -1,5 +1,6 @@
 package novagpt.command;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import novagpt.exception.NovaException;
@@ -212,5 +213,44 @@ public class TaskList {
             }
         }
         return Ui.findMessage(output);
+    }
+
+    /**
+     * Returns reminders for tasks with upcoming deadlines/events
+     * This checks tasks within the next given number of days
+     * @param input The input string that the user provides
+     * @param ls ArrayList containing all saved tasks
+     */
+    public static String handleReminders(String input, ArrayList<Task> ls) throws NovaException {
+        int days = Parser.parseTaskIndex(input, "reminder") + 1;
+        LocalDateTime presentDateTime = LocalDateTime.now();
+        LocalDateTime cutoffDateTime = presentDateTime.plusDays(days);
+        String out = "";
+        int counter = 1;
+
+        for (Task task : ls) {
+            if (task instanceof Deadline) {
+                Deadline deadlineTask = (Deadline) task;
+                LocalDateTime dEndTimeDate = deadlineTask.getEndTimeAndDate();
+                Boolean isAfterToday = dEndTimeDate.isAfter(presentDateTime);
+                Boolean isBeforeCutoff = dEndTimeDate.isBefore(cutoffDateTime);
+                Boolean isWithWindow = isAfterToday && isBeforeCutoff;
+                if (isWithWindow) {
+                    out += "\n" + counter + ". " + deadlineTask;
+                    counter++;
+                }
+            } else if (task instanceof Event) {
+                Event eventTask = (Event) task;
+                LocalDateTime dEndTimeDate = eventTask.getStartTimeAndDate();
+                Boolean isAfterToday = dEndTimeDate.isAfter(presentDateTime);
+                Boolean isBeforeCutoff = dEndTimeDate.isBefore(cutoffDateTime);
+                Boolean isWithWindow = isAfterToday && isBeforeCutoff;
+                if (isWithWindow) {
+                    out += "\n" + counter + ". " + eventTask;
+                    counter++;
+                }
+            }
+        }
+        return Ui.reminderMessage(days, out);
     }
 }

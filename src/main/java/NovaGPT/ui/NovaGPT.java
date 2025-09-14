@@ -82,6 +82,8 @@ public class NovaGpt {
             return TaskList.handleDelete(input, tasks, storage);
         case FIND:
             return TaskList.handleFind(input, tasks);
+        case REMINDER:
+            return TaskList.handleReminders(input, tasks);
         case MAN:
             return Ui.LIST_OF_COMMANDS;
         case UNKNOWN:

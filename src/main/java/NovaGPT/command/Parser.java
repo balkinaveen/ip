@@ -36,6 +36,8 @@ public class Parser {
             return Command.DELETE;
         } else if (lowerCaseInput.startsWith("find")) {
             return Command.FIND;
+        } else if (lowerCaseInput.startsWith("reminder")) {
+            return Command.REMINDER;
         } else if (lowerCaseInput.startsWith("man")) {
             return Command.MAN;
         } else {
