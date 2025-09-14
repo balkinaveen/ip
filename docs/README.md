@@ -21,7 +21,9 @@ Hope you're having a nice day!
 What can I do for you today?
 ```
 ## Features
+
 ### 📚 Adding Todos
+
 Adds a simple task without any date/time <br>
 **Format:**
 ```
@@ -39,6 +41,7 @@ Now you have 1 tasks in the list.
 ```
 ---
 ### ⏰ Adding Deadlines
+
 Adds a task with a deadline <br>
 **Format:**
 ```
@@ -56,6 +59,7 @@ Now you have 2 tasks in the list.
 ```
 ---
 ### 📅 Adding Events
+
 Adds a task with a start and end time <br>
 **Format:**
 ```
@@ -73,6 +77,7 @@ Now you have 3 tasks in the list.
 ```
 ---
 ### ✅ Marking and ❎ Unmarking Tasks
+
 Marks or unmarks a task as done <br>
 **Format:**
 ```
@@ -99,6 +104,7 @@ OK, I've marked this task as not done yet:
 ```
 ---
 ### 🗑️ Deleting Tasks
+
 Deletes a task from the list <br>
 **Format:**
 ```
@@ -116,6 +122,7 @@ Now you have 2 tasks in the list.
 ```
 ---
 ### 📋 Listing All Tasks
+
 Shows all tasks in your list <br>
 **Format:**
 ```
@@ -133,6 +140,7 @@ list
 ```
 ---
 ### 🔍 Finding All Tasks
+
 Finds tasks containing a keyword <br>
 **Format:**
 ```
@@ -149,6 +157,7 @@ Here are the matching tasks in your list:
 ```
 ---
 ### 🔔 Reminder
+
 Shows upcoming deadlines and events with the next user specified days <br>
 **Format:**
 ```
@@ -165,6 +174,7 @@ Here are your upcoming tasks within the next 2 days
 ```
 ---
 ### 🚪 Exiting the App
+
 Exits the app <br>
 **Format:**
 ```
