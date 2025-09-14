@@ -39,7 +39,7 @@ public class MainWindow extends AnchorPane {
 
     /** Injects the NovaGPT instance */
     public void setNovagpt(NovaGpt n) {
-        assert n != null;
+        assert n != null : "Injected NovaGPT instance must not be null";
         novagpt = n;
     }
 
@@ -50,6 +50,7 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = getUserInput();
+        assert input != null : "User input must not be null";
         if (input.toLowerCase().equals("bye")) {
             dialogContainer.getChildren().addAll(
                     DialogBox.getUserDialog(input, userImage),
@@ -63,6 +64,7 @@ public class MainWindow extends AnchorPane {
             delay.play();
         } else {
             String response = novagpt.response(input);
+            assert response != null : "Response must not be null";
             dialogContainer.getChildren().addAll(
                     DialogBox.getUserDialog(input, userImage),
                     DialogBox.getDukeDialog(response, novagptImage)

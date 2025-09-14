@@ -23,7 +23,6 @@ public class NovaGpt {
 
     private final Storage storage;
     private final ArrayList<Task> tasks;
-
     /**
      * Initializes a chatbot instance
      * @param filePath is where the file is stored
@@ -31,13 +30,17 @@ public class NovaGpt {
     public NovaGpt(String filePath) {
         this.storage = new Storage(filePath);
         this.tasks = storage.load();
+        assert storage != null : "Storage must not be null";
+        assert tasks != null : "Tasks list must be null after loading";
     }
     /**
      * Parses the input and gives the output
      * @param input is the input provided by user
      */
     public String response(String input) {
+        assert input != null : "Input string must not be null";
         Command command = Parser.parseCommandFromInput(input);
+        assert command != null : "Parsed command must not be null";
         try {
             switch (command) {
             case BYE:
