@@ -208,7 +208,7 @@ public class TaskList {
         for (int i = 0; i < ls.size(); i++) {
             Task task = ls.get(i);
             if (task.getTaskDescription().contains(searchString)) {
-                output += "\n" + counter + "." + task;
+                output += "\n" + counter + ". " + task;
                 counter++;
             }
         }

@@ -36,8 +36,11 @@ public class MainWindow extends AnchorPane {
     /** Initialises the ui */
     @FXML
     public void initialize() {
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPannable(true);
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         dialogContainer.getChildren().add(DialogBox.getNovagptDialog(Ui.welcomeMessage(), novagptImage));
+        userInput.setPromptText("Command");
     }
 
     /** Injects the NovaGPT instance */
