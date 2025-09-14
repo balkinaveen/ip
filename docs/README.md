@@ -13,6 +13,7 @@ Prerequisites: JDK 17
    ```
    java -jar novagpt.jar
    ```
+   
 ## Usage of the Chatbot
 When NovaGPT starts, you'll see:
 ```
@@ -20,6 +21,7 @@ Hello!
 Hope you're having a nice day!
 What can I do for you today?
 ```
+
 ## Features
 
 ### 📚 Adding Todos
