@@ -11,14 +11,21 @@ import novagpt.task.Task;
 
 
 /**
- * The NovaGPT program implements a chatbot application that
- * interacts with a user with a pre-defined list of instructions.
+ * The {@code NovaGpt} class represents the main logic handler of the NovaGPT chatbot.
+ * It interprets user input, delegates the execution of commands, and interacts with
+ * persistent storage.
+ *
+ * <p>This class loads tasks from disk, processes user commands,
+ * and returns responses based on user interaction.</p>
+ *
+ * <p>It relies on {@link Storage} for loading and saving tasks,
+ * and uses {@link Parser} and {@link TaskList} to handle command parsing
+ * and execution logic.</p>
  *
  * @author  Balakrishnan Naveen Mani Kumar
  * @version 0.1
  * @since   2025-08-12
  */
-
 public class NovaGpt {
 
     private static final String UNKNOWN_COMM_MESSAGE = """
@@ -29,8 +36,11 @@ public class NovaGpt {
     private final Storage storage;
     private final ArrayList<Task> tasks;
     /**
-     * Initializes a chatbot instance
-     * @param filePath is where the file is stored
+     * Constructs a new {@code NovaGpt} instance with the specified file path for persistent storage.
+     * It loads any previously saved tasks from disk into memory.
+     *
+     * @param filePath The path to the file used for reading and writing task data.
+     * @throws AssertionError if the storage or loaded task list is null.
      */
     public NovaGpt(String filePath) {
         this.storage = new Storage(filePath);
@@ -39,9 +49,12 @@ public class NovaGpt {
         assert tasks != null : "Tasks list must be null after loading";
     }
     /**
-     * Parses the input and gives the output
-     * @param input is the input provided by user
-     * @return Response message (output) for the user
+     * Processes the given user input and returns the chatbot's textual response.
+     * The input is first parsed into a {@link Command}, which is then executed.
+     *
+     * @param input The user's input string.
+     * @return A string representing NovaGPT's response to the user.
+     * @throws AssertionError if the input or parsed command is null.
      */
     public String response(String input) {
         assert input != null : "Input string must not be null";
@@ -56,12 +69,15 @@ public class NovaGpt {
         }
     }
     /**
-     * Handles the given command and returns the appropriate response
-     * @param command Parsed command type
-     * @param input is the input provided by user
-     * @return Response message (output) for the user
-     * @throws NovaException if an invalid command is given
+     * Executes the given {@link Command} based on the user's input,
+     * and returns the appropriate output string for the chatbot.
+     *
+     * @param command The parsed command to execute.
+     * @param input   The original user input string.
+     * @return A string representing the result of executing the command.
+     * @throws NovaException If the command is invalid or improperly formatted.
      */
+
     public String handleCommand(Command command, String input) throws NovaException {
         switch (command) {
         case BYE:
