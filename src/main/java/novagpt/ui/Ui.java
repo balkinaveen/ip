@@ -47,7 +47,8 @@ public class Ui {
             + DELETE_COMMAND_FORMAT + "\n"
             + MARK_COMMAND_FORMAT + "\n"
             + UNMARK_COMMAND_FORMAT + "\n"
-            + LIST_COMMAND_FORMAT;
+            + LIST_COMMAND_FORMAT + "\n"
+            + REMINDER_COMMAND_FORMAT;
 
 
     /**
