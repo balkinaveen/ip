@@ -17,9 +17,7 @@ Prerequisites: JDK 17
 ## Usage of the Chatbot
 When NovaGPT starts, you'll see:
 ```
-Hello!
-Hope you're having a nice day!
-What can I do for you today?
+✨ Greetings, Earthling! Nova reporting for task duty. What's on your mind today?
 ```
 
 ## Features
@@ -37,9 +35,9 @@ todo read book
 ```
 **Expected output:**
 ```
-Got it. I've added this task:
+🚀 Task locked and loaded:
 [T][ ] read book
-Now you have 1 tasks in the list.
+You now have 1 task(s) in the list.
 ```
 ---
 ### ⏰ Adding Deadlines
@@ -55,9 +53,9 @@ deadline submit report /by 15/09/2025 2359
 ```
 **Expected output:**
 ```
-Got it. I've added this task:
+🚀 Task locked and loaded:
 [D][ ] submit report (by: Sep 15 2025, 11:59pm)
-Now you have 2 tasks in the list.
+You now have 2 task(s) in the list.
 ```
 ---
 ### 📅 Adding Events
@@ -73,9 +71,9 @@ event CS 2103T project meeting /from 15/09/2025 1500 /to 15/09/2025 1700
 ```
 **Expected output:**
 ```
-Got it. I've added this task:
+🚀 Task locked and loaded:
 [E][ ] submit report (from: Sep 15 2025, 03:00pm to: Sep 15 2025, 05:00pm)
-Now you have 3 tasks in the list.
+You now have 3 task(s) in the list.
 ```
 ---
 ### ✅ Marking and ❎ Unmarking Tasks
@@ -92,7 +90,7 @@ mark 1
 ```
 **Expected output:**
 ```
-Nice! I've marked this task as done:
+🌟 Great job, Commander! Task marked as complete:
 [T][X] read book
 ```
 **Example:**
@@ -101,7 +99,7 @@ unmark 1
 ```
 **Expected output:**
 ```
-OK, I've marked this task as not done yet:
+🪐 Oops! Task reset to incomplete mode:
 [T][ ] read book
 ```
 ---
@@ -118,9 +116,9 @@ delete 2
 ```
 **Expected output:**
 ```
-Noted. I've removed this task:
+💥 Task ejected from orbit:
 [D][ ] submit report (by: Sep 15 2025, 11:59pm)
-Now you have 2 tasks in the list.
+You now have 2 task(s) in the list.
 ```
 ---
 ### 📋 Listing All Tasks
@@ -137,6 +135,7 @@ list
 **Expected output:**
 
 ```
+🛰️ Scanning your task galaxy...
 1. [T][ ] read book
 2. [E][ ] CS 2103T project meeting (from: Sep 15 2025, 3:00pm to: Sep 15 2025, 5:00pm)
 ```
@@ -154,7 +153,7 @@ find book
 ```
 **Expected output:**
 ```
-Here are the matching tasks in your list:
+🔭 Nova found the following cosmic matches:
 1. [T][ ] read book
 ```
 ---
@@ -171,7 +170,7 @@ reminder 2
 ```
 **Expected output:**
 ```
-Here are your upcoming tasks within the next 2 days
+📡 Incoming transmissions: tasks due within 2 days
 1. [E][ ] CS 2103T project meeting (from: Sep 15 2025, 3:00pm to: Sep 15 2025, 5:00pm)
 ```
 ---
@@ -184,8 +183,7 @@ bye
 ```
 **Expected output:**
 ```
-Bye. Hope to see you soon!
-HAND!
+🌠 Mission complete. Nova signing off. Stay stellar!
 ```
 ## Important Notes
 - All dates and times must follow the following format: `DD/MM/YYYY HHMM (24-hour clock)`
