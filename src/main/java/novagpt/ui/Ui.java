@@ -56,7 +56,8 @@ public class Ui {
      * @return Greeting message.
      */
     public static String welcomeMessage() {
-        return "Hello! \nHope you're having a nice day! \nWhat can I do for you today?";
+        //return "Hello! \nHope you're having a nice day! \nWhat can I do for you today?";
+        return "✨ Greetings, Earthling! Nova reporting for task duty. What's on your mind today?";
     }
 
     /**
@@ -65,7 +66,7 @@ public class Ui {
      * @return Goodbye message.
      */
     public static String goodbyeMessage() {
-        return "Bye. Hope to see you soon!\nHAND!";
+        return "\uD83C\uDF20 Mission complete. Nova signing off. Stay stellar!";
     }
 
     /**
@@ -76,10 +77,10 @@ public class Ui {
      * @return Formatted string confirming task addition.
      */
     public static String taskMessage(Task task, ArrayList<Task> ls) {
-        return "Got it. I've added this task:\n"
-                + task + "\nNow you have "
+        return "\uD83D\uDE80 Task locked and loaded: \n"
+                + task + "\nYou now have "
                 + ls.size()
-                + " tasks in the list.";
+                + " task(s) orbiting your list!\"";
     }
 
     /**
@@ -89,7 +90,7 @@ public class Ui {
      * @return Formatted string confirming the task is marked as done.
      */
     public static String markMessage(Task task) {
-        return "Nice! I've marked this task as done: \n"
+        return "🌟 Great job, Commander! Task marked as complete: \n"
                 + task;
     }
 
@@ -100,7 +101,7 @@ public class Ui {
      * @return Formatted string confirming the task is unmarked.
      */
     public static String unmarkMessage(Task task) {
-        return "OK, I've marked this task as not done yet: \n"
+        return "🪐 Oops! Task reset to incomplete mode: \n"
                 + task;
     }
 
@@ -114,7 +115,7 @@ public class Ui {
         if (tasksAsString.isEmpty()) {
             return "No tasks in your list currently! Let's start adding tasks!";
         }
-        return "Here is a list of your tasks \n" + tasksAsString;
+        return "\uD83D\uDEF0\uFE0F Scanning your task galaxy...\n" + tasksAsString;
     }
 
     /**
@@ -125,10 +126,10 @@ public class Ui {
      * @return Formatted string confirming task removal.
      */
     public static String removeMessage(Task removed, ArrayList<Task> ls) {
-        return "Noted. I've removed this task:\n"
-                + removed.toString() + "\nNow you have "
+        return "\uD83D\uDCA5 Task ejected from orbit: \n"
+                + removed.toString() + "\nYou now have "
                 + ls.size()
-                + " tasks in the list.";
+                + " task(s) left.";
     }
 
     /**
@@ -138,7 +139,7 @@ public class Ui {
      * @return Search result message.
      */
     public static String findMessage(String s) {
-        return "Here are the matching tasks in your list:" + s;
+        return "\uD83D\uDD2D Nova found the following cosmic matches: " + s;
     }
 
     /**
@@ -170,8 +171,8 @@ public class Ui {
      */
     public static String reminderMessage(int days, String reminderAsString) {
         if (reminderAsString.isEmpty()) {
-            return "No upcoming deadlines or events within the next " + days + " days";
+            return "\uD83D\uDD73\uFE0F No upcoming tasks within the next " + days + " days in your universe!";
         }
-        return "Here are your upcoming tasks within the next " + days + " days" + reminderAsString;
+        return "\uD83D\uDCE1 Incoming transmissions: tasks due within " + days + " days" + reminderAsString;
     }
 }
