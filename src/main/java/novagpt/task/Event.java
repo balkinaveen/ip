@@ -7,11 +7,11 @@ import java.time.format.DateTimeFormatter;
 import novagpt.exception.NovaException;
 
 /**
- * Represents an Event task
- * Each task has a description, a completion status,
- * a start Time and Date and an end Time and Date.
- * Takes in a specific format of Date and Time and
- * outputs a set format of Date and Time
+ * Represents an {@code Event} task.
+ * An event task contains a description, a start date/time, and an end date/time.
+ * Inputs are expected in the format {@code dd/MM/yyyy HHmm}, and are reformatted for output.
+ *
+ * <p>
  */
 public class Event extends Task {
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
@@ -20,11 +20,12 @@ public class Event extends Task {
     private final LocalDateTime endTimeDate;
 
     /**
-     * Constructs an event object with the given description and start/end date and time
-     * @param description of the event
-     * @param startTimeDate Start date-time in string
-     * @param endTimeDate End date-time in string
-     * @throws NovaException if either date or time does not follow the expected format
+     * Constructs an {@code Event} task.
+     *
+     * @param description Description of the event.
+     * @param startTimeDate Start datetime string (format: {@code dd/MM/yyyy HHmm}).
+     * @param endTimeDate End datetime string (format: {@code dd/MM/yyyy HHmm}).
+     * @throws NovaException If the input datetime format is incorrect.
      */
     public Event(String description, String startTimeDate, String endTimeDate) throws NovaException {
         super(description);
@@ -39,19 +40,28 @@ public class Event extends Task {
     }
 
     /**
-     * Gets the start time and date
+     * Returns the event start date and time.
+     *
+     * @return {@code LocalDateTime} object for the start datetime.
      */
     public LocalDateTime getStartTimeAndDate() {
         return this.startTimeDate;
     }
 
     /**
-     * Gets the end time and date
+     * Returns the event end date and time.
+     *
+     * @return {@code LocalDateTime} object for the end datetime.
      */
     public LocalDateTime getEndTimeAndDate() {
         return this.endTimeDate;
     }
 
+    /**
+     * Returns the string representation of the event.
+     *
+     * @return A formatted string with task type, status, description, and time range.
+     */
     @Override
     public String toString() {
         return "[E]"

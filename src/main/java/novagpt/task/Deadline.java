@@ -7,10 +7,9 @@ import java.time.format.DateTimeFormatter;
 import novagpt.exception.NovaException;
 
 /**
- * Represents a Deadline task
- * Each task has a description, a completion status, an end Time and Date.
- * Takes in a specific format of Date and Time and
- * outputs a set format of Date and Time
+ * Represents a {@code Deadline} task.
+ * A deadline task contains a description and a due date/time.
+ * Inputs are expected in the format {@code dd/MM/yyyy HHmm}, and are reformatted for output.
  */
 public class Deadline extends Task {
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
@@ -18,10 +17,11 @@ public class Deadline extends Task {
     private final LocalDateTime endTimeDate;
 
     /**
-     * Constructs a deadline object with the given description and end date and time
-     * @param description of the deadline
-     * @param deadline End date-time in string
-     * @throws NovaException if either date or time does not follow the expected format
+     * Constructs a {@code Deadline} task.
+     *
+     * @param description Description of the deadline.
+     * @param deadline Due datetime string (format: {@code dd/MM/yyyy HHmm}).
+     * @throws NovaException If the input datetime format is incorrect.
      */
     public Deadline(String description, String deadline) throws NovaException {
         super(description);
@@ -35,12 +35,19 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns the end time and date
+     * Returns the deadline's due date and time.
+     *
+     * @return {@code LocalDateTime} object for the due datetime.
      */
     public LocalDateTime getEndTimeAndDate() {
         return this.endTimeDate;
     }
 
+    /**
+     * Returns the string representation of the deadline.
+     *
+     * @return A formatted string with task type, status, description, and due date/time.
+     */
     @Override
     public String toString() {
         return "[D]"

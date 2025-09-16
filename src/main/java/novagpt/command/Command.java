@@ -5,7 +5,6 @@ package novagpt.command;
  * This enum provides a fixed set of commands for the chatbot,
  * ensuring type safety while working with command-related operations
  */
-
 public enum Command {
     BYE,
     LIST,

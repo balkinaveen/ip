@@ -12,9 +12,13 @@ import novagpt.task.Todo;
 import novagpt.ui.Ui;
 
 /**
- * Represents a TaskList, which contains the handlers for Task orientated commands
- * This class contains methods to handle Todo, Deadline, Event tasks
- * as well as methods to handle mark, unmark, delete and list commands
+ * Handles the execution of task-related commands.
+ * <p>
+ * This class provides static methods to manage operations on the task list,
+ * including adding new tasks (Todo, Deadline, Event), updating task status (mark/unmark),
+ * displaying task list, deleting tasks, searching for keywords, and setting reminders.
+ * </p>
+ *
  */
 public class TaskList {
 
@@ -42,16 +46,13 @@ public class TaskList {
     }
 
     /**
-     * Handles Deadline Tasks
-     * Takes in a user input String, ArrayList and Storage
-     * ensures that input is valid,
-     * creates a deadline task, adds it to the Arraylist and prompts ui
-     * to print the respective output message
+     * Handles the creation of a Deadline task.
      *
-     * @param input The input string that the user provides
-     * @param ls ArrayList containing all saved tasks
-     * @param st Storage object handling all storage related commands
-     * @throws NovaException If the input is invalid
+     * @param input The full user input (e.g. "deadline submit report /by 20/09/2025 2359")
+     * @param ls The current list of tasks
+     * @param st The Storage instance used to persist tasks
+     * @return Confirmation message from the Ui
+     * @throws NovaException If the input is missing description or deadline, or incorrectly formatted
      */
     public static String handleDeadlineTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         String text = input.substring("deadline".length()).trim();
@@ -71,16 +72,13 @@ public class TaskList {
     }
 
     /**
-     * Handles Event Tasks
-     * Takes in a user input String, ArrayList and Storage
-     * ensures that input is valid,
-     * creates an event task, adds it to the Arraylist and prompts ui
-     * to print the respective output message
+     * Handles the creation of an Event task.
      *
-     * @param input The input string that the user provides
-     * @param ls ArrayList containing all saved tasks
-     * @param st Storage object handling all storage related commands
-     * @throws NovaException If the input is invalid
+     * @param input The full user input (e.g. "event CS2103T Exam /from 01/10/2025 1400 /to 01/10/2025 1600")
+     * @param ls The current list of tasks
+     * @param st The Storage instance used to persist tasks
+     * @return Confirmation message from the Ui
+     * @throws NovaException If the input is missing description, start/end time, or incorrectly formatted
      */
     public static String handleEventTask(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         String text = input.substring("event".length()).trim();
@@ -102,16 +100,13 @@ public class TaskList {
     }
 
     /**
-     * Handles Mark Command
-     * Takes in a user input String
-     * ensures that input is valid and number is within range
-     * marks the corresponding task as done and
-     * prints the respective output message
+     * Marks a task as done.
      *
-     * @param input The input string that the user provides
-     * @param ls ArrayList containing all saved tasks
-     * @param st Storage object handling all storage related commands
-     * @throws NovaException If the input is invalid
+     * @param input The full user input (e.g. "mark 1")
+     * @param ls The current list of tasks
+     * @param st The Storage instance used to persist tasks
+     * @return Confirmation message from the Ui
+     * @throws NovaException If the task index is invalid
      */
     public static String handleMark(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         int listNum = Parser.parseTaskIndex(input, "mark");
@@ -125,16 +120,13 @@ public class TaskList {
     }
 
     /**
-     * Handles Unmark Command
-     * Takes in a user input String
-     * ensures that input is valid and number is within range
-     * unmarks the corresponding task as not done and
-     * prints the respective output message
+     * Marks a task as not done.
      *
-     * @param input The input string that the user provides
-     * @param ls ArrayList containing all saved tasks
-     * @param st Storage object handling all storage related commands
-     * @throws NovaException If the input is invalid
+     * @param input The full user input (e.g. "unmark 1")
+     * @param ls The current list of tasks
+     * @param st The Storage instance used to persist tasks
+     * @return Confirmation message from the Ui
+     * @throws NovaException If the task index is invalid
      */
     public static String handleUnmark(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         int listNum = Parser.parseTaskIndex(input, "unmark");
@@ -148,13 +140,10 @@ public class TaskList {
     }
 
     /**
-     * Returns a list of tasks
-     * Handles list Command
-     * Takes in an ArrayList
-     * for each task in ArrayList, adds the details to an outout string
-     * add returns the output string
+     * Returns a formatted string representing the full list of tasks.
      *
-     * @param ls ArrayList containing all saved tasks
+     * @param ls The current list of tasks
+     * @return A formatted list of tasks from the Ui
      */
     public static String handleList(ArrayList<Task> ls) {
         String output = "";
@@ -170,16 +159,13 @@ public class TaskList {
     }
 
     /**
-     * Handles delete Command
-     * Takes in a user input String
-     * ensures that input is valid and number is within range
-     * deletes the corresponding task and
-     * prints the respective output message
+     * Deletes a task from the list.
      *
-     * @param input The input string that the user provides
-     * @param ls ArrayList containing all saved tasks
-     * @param st Storage object handling all storage related commands
-     * @throws NovaException If the input is invalid
+     * @param input The full user input (e.g. "delete 2")
+     * @param ls The current list of tasks
+     * @param st The Storage instance used to persist tasks
+     * @return Confirmation message from the Ui
+     * @throws NovaException If the task index is invalid
      */
     public static String handleDelete(String input, ArrayList<Task> ls, Storage st) throws NovaException {
         int listNum = Parser.parseTaskIndex(input, "delete");
@@ -192,11 +178,12 @@ public class TaskList {
     }
 
     /**
-     * Handles find Command
-     * Takes in a user input String
-     * ensures that input is valid
-     * finds all tasks containing the search String and
-     * prints a list
+     * Finds and returns a list of tasks that contain a given keyword.
+     *
+     * @param input The full user input (e.g. "find exam")
+     * @param ls The current list of tasks
+     * @return A list of matching tasks from the Ui
+     * @throws NovaException If the search string is empty
      */
     public static String handleFind(String input, ArrayList<Task> ls) throws NovaException {
         String searchString = input.substring(4).trim();
@@ -216,10 +203,12 @@ public class TaskList {
     }
 
     /**
-     * Returns reminders for tasks with upcoming deadlines/events
-     * This checks tasks within the next given number of days
-     * @param input The input string that the user provides
-     * @param ls ArrayList containing all saved tasks
+     * Provides reminders for upcoming deadlines or events within a specified number of days.
+     *
+     * @param input The full user input (e.g. "reminder 3")
+     * @param ls The current list of tasks
+     * @return A reminder message listing tasks due within the timeframe
+     * @throws NovaException If the input format is invalid
      */
     public static String handleReminders(String input, ArrayList<Task> ls) throws NovaException {
         int days = Parser.parseTaskIndex(input, "reminder") + 1;

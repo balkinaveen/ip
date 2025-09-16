@@ -15,24 +15,28 @@ import novagpt.task.Todo;
 
 
 /**
- * Handles saving and loading tasks from a text file
+ * Handles reading from and writing to the task storage file on disk.
+ * Supports parsing and serializing {@code Todo}, {@code Deadline}, and {@code Event} tasks.
+ *
  */
 public class Storage {
     private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
     private final Path filePath;
 
     /**
-     * Constructs a Storage object with the given file path
-     * @param filepath to the file used for saving and loading of tasks
+     * Constructs a {@code Storage} object with the given file path.
+     *
+     * @param filepath Path to the file used for saving and loading tasks.
      */
     public Storage(String filepath) {
         this.filePath = Paths.get(filepath);
     }
 
     /**
-     * Loads tasks from the storage file
-     * Creates the file or parent directories if they do not exist
-     * @return the ArrayList
+     * Loads tasks from the storage file.
+     * If the file or its parent directories do not exist, they will be created.
+     *
+     * @return An {@code ArrayList<Task>} containing tasks restored from the file.
      */
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -51,6 +55,12 @@ public class Storage {
         }
         return tasks;
     }
+    /**
+     * Ensures the file and its directories exist.
+     * Creates missing parent directories and file if needed.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     private void ensureFileDirectoriesExists() throws IOException {
         Path parent = filePath.getParent();
         if (parent != null) {
@@ -62,9 +72,10 @@ public class Storage {
     }
 
     /**
-     * Parses a line of text and reconstructs the corresponds tasks
-     * @param line from the storage file
-     * @return reconstructed task or null if the line is invalid
+     * Parses a single line from the storage file and reconstructs the corresponding {@code Task}.
+     *
+     * @param line A string from the saved file representing a task.
+     * @return A {@code Task} object reconstructed from the line, or {@code null} if invalid.
      */
     public Task parseLine(String line) {
         try {
@@ -101,8 +112,10 @@ public class Storage {
     }
 
     /**
-     * Saves tasks into specified text file
-     * @param tasks list of tasks to save
+     * Saves a list of tasks to the file.
+     * Each task is serialized into a delimited format and written line-by-line.
+     *
+     * @param tasks {@code ArrayList<Task>} to be saved to file.
      */
     public void save(ArrayList<Task> tasks) {
         try {

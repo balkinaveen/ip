@@ -5,25 +5,37 @@ import java.util.ArrayList;
 import novagpt.task.Task;
 
 /**
- * Represents Ui interface
- * Ensures the correct output for user interactions
+ * The {@code Ui} class handles all user-facing interactions in the NovaGPT chatbot.
+ * It provides preformatted response messages for various task-related operations such as
+ * adding, marking, listing, and removing tasks, as well as for general interactions like
+ * greetings, errors, and help prompts.
+ *
+ * <p>This class also stores commonly used command format strings and error messages
+ * for consistency across the chatbot's user interface.</p>
  */
 public class Ui {
-
+    /** Kill switch input to terminate the program. */
     public static final String KILL_SWITCH = "bye";
-
+    /** Command format for adding a todo task. */
     public static final String TODO_COMMAND_FORMAT = "todo <task name>";
+    /** Command format for adding a deadline task. */
     public static final String DEADLINE_COMMAND_FORMAT = "deadline <task name> /by <deadline> "
             + "DD/MM/YYYY HHMM (24 hour)";
+    /** Command format for adding an event task. */
     public static final String EVENT_COMMAND_FORMAT = "event <task name> "
             + "/from <start time> DD/MM/YYYY HHMM (24 hour) /to <end time> DD/MM/YYYY HHMM (24 hour)";
+    /** Command format for finding tasks by keyword. */
     public static final String FIND_COMMAND_FORMAT = "find <keyword(s) to search>";
+    /** Command format for deleting a task. */
     public static final String DELETE_COMMAND_FORMAT = "delete <Task number>";
+    /** Command format for marking a task as done. */
     public static final String MARK_COMMAND_FORMAT = "mark <Task number>";
+    /** Command format for unmarking a task. */
     public static final String UNMARK_COMMAND_FORMAT = "unmark <Task number>";
+    /** Command format for listing all tasks. */
     public static final String LIST_COMMAND_FORMAT = "list";
+    /** Command format for listing reminders within a certain number of days. */
     public static final String REMINDER_COMMAND_FORMAT = "reminder <number of days to remind within>";
-
     public static final String EMPTY_ERROR_MESSAGE = "OOPS! The description of a task cannot be empty. \n";
     public static final String FORMAT_MESSAGE = "Do format the message: ";
     public static final String OUT_OF_INDEX = "OOPS! Task number is out of range! Try again";
@@ -39,24 +51,29 @@ public class Ui {
 
 
     /**
-     * Prints a welcome message with NovaGPT logo.
+     * Returns the welcome message displayed at program startup.
+     *
+     * @return Greeting message.
      */
     public static String welcomeMessage() {
         return "Hello! \nHope you're having a nice day! \nWhat can I do for you today?";
     }
 
     /**
-     * Prints a goodbye message
+     * Returns the farewell message displayed upon exiting the program.
+     *
+     * @return Goodbye message.
      */
     public static String goodbyeMessage() {
         return "Bye. Hope to see you soon!\nHAND!";
     }
 
     /**
-     * Prints the output of a task
+     * Returns a confirmation message for a successfully added task.
      *
-     * @param task the task that was added
-     * @param ls is the list of tasks that was added
+     * @param task The task that was added.
+     * @param ls The current task list containing the added task.
+     * @return Formatted string confirming task addition.
      */
     public static String taskMessage(Task task, ArrayList<Task> ls) {
         return "Got it. I've added this task:\n"
@@ -66,9 +83,10 @@ public class Ui {
     }
 
     /**
-     * Prints the status of a marked task
+     * Returns a confirmation message for marking a task as completed.
      *
-     * @param task the task that needs to be mark as done
+     * @param task The task to mark as done.
+     * @return Formatted string confirming the task is marked as done.
      */
     public static String markMessage(Task task) {
         return "Nice! I've marked this task as done: \n"
@@ -76,9 +94,10 @@ public class Ui {
     }
 
     /**
-     * Prints the status of a unmarked task
+     * Returns a confirmation message for marking a task as not done.
      *
-     * @param task the text to output to the user
+     * @param task The task to unmark.
+     * @return Formatted string confirming the task is unmarked.
      */
     public static String unmarkMessage(Task task) {
         return "OK, I've marked this task as not done yet: \n"
@@ -86,9 +105,10 @@ public class Ui {
     }
 
     /**
-     * Prints a list of tasks
+     * Returns a formatted list of all current tasks.
      *
-     * @param tasksAsString is a string of tasks to print
+     * @param tasksAsString A string representation of the task list.
+     * @return Formatted string listing all tasks or notifying if empty.
      */
     public static String listMessage(String tasksAsString) {
         if (tasksAsString.isEmpty()) {
@@ -98,10 +118,11 @@ public class Ui {
     }
 
     /**
-     * Prints the status of a removed task
+     * Returns a confirmation message after removing a task.
      *
-     * @param removed is the task that was removed
-     * @param ls is the list of current tasks after the removal
+     * @param removed The task that was removed.
+     * @param ls The current task list after removal.
+     * @return Formatted string confirming task removal.
      */
     public static String removeMessage(Task removed, ArrayList<Task> ls) {
         return "Noted. I've removed this task:\n"
@@ -110,23 +131,42 @@ public class Ui {
                 + " tasks in the list.";
     }
 
+    /**
+     * Returns the result of a keyword-based search within the task list.
+     *
+     * @param s Formatted string of matching tasks.
+     * @return Search result message.
+     */
     public static String findMessage(String s) {
         return "Here are the matching tasks in your list:" + s;
     }
 
+    /**
+     * Returns a formatted error message.
+     *
+     * @param error The specific error to display.
+     * @return Formatted error message string.
+     */
     public static String errorMessage(String error) {
         return error;
     }
 
+    /**
+     * Returns a generic error message for unexpected errors.
+     *
+     * @param error The error message or stack trace.
+     * @return Generic error message string.
+     */
     public static String unexpectedErrorMessage(String error) {
         return "Unexpected error: " + error;
     }
 
     /**
-     * Prints a list of tasks
+     * Returns a reminder message for upcoming deadlines and events within the specified number of days.
      *
-     * @param days number of days to set the reminder for
-     * @param reminderAsString is a string of tasks to print
+     * @param days The time window (in days) for upcoming tasks.
+     * @param reminderAsString A string representation of tasks within that window.
+     * @return Formatted reminder message.
      */
     public static String reminderMessage(int days, String reminderAsString) {
         if (reminderAsString.isEmpty()) {

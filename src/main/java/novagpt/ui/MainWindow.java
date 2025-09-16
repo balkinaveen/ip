@@ -11,7 +11,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 /**
- * Controller for the main GUI.
+ * Controller for the main GUI of NovaGPT.
+ * <p>
+ * Handles user interaction, input processing, and visual dialog box updates.
  */
 public class MainWindow extends AnchorPane {
     private static final double EXIT_DELAY_SECONDS = 1.0;
@@ -33,7 +35,12 @@ public class MainWindow extends AnchorPane {
     private Image novagptImage = new Image(this.getClass().getResourceAsStream(NOVAGPT_IMAGE));
 
 
-    /** Initialises the ui */
+    /**
+     * Initializes the main UI components.
+     * <p>
+     * Binds the scrollPane to the dialogContainer height, ensures vertical scrolling,
+     * adds welcome message from NovaGPT, and sets placeholder text in the input field.
+     */
     @FXML
     public void initialize() {
         scrollPane.setFitToWidth(true);
@@ -43,15 +50,21 @@ public class MainWindow extends AnchorPane {
         userInput.setPromptText("Command");
     }
 
-    /** Injects the NovaGPT instance */
+    /**
+     * Injects the NovaGPT instance to this UI controller.
+     *
+     * @param n NovaGPT backend instance.
+     */
     public void setNovagpt(NovaGpt n) {
         assert n != null : "Injected NovaGPT instance must not be null";
         novagpt = n;
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing NovaGPT's reply and
-     * then appends them to the dialog container. Clears the user input after processing.
+     * Handles user input when the send button is clicked or Enter is pressed.
+     * <p>
+     * Echoes the user's command and displays NovaGPT's response in dialog boxes.
+     * If input is "bye", shows goodbye message and exits after a short delay.
      */
     @FXML
     private void handleUserInput() {
@@ -79,6 +92,11 @@ public class MainWindow extends AnchorPane {
         }
     }
 
+    /**
+     * Retrieves the current text from the user input field.
+     *
+     * @return A String containing the user's input.
+     */
     private String getUserInput() {
         return userInput.getText();
     }
