@@ -29,7 +29,7 @@ Prerequisites: JDK 17
 ## Usage of the Chatbot
 When NovaGPT starts, you'll see:
 <p align="left">
-<img width="591" height="740" alt="image" src="https://github.com/user-attachments/assets/6aad8d0b-5833-46f5-a187-96fce372cd9b" />
+<img width="591" height="740" alt="image" src="https://github.com/user-attachments/assets/60ebbcfe-d3f9-417b-ac0f-bc6a334bf29e" />
 </p>
 
 ### Example Commands
